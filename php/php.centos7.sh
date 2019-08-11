@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # PHP script file example
-#     ./php7.sh $1 $2
-#     ./php7.sh init php73
+#     ./php.centos7.sh $1 $2
+#     ./php.centos7.sh init php73
 
 init(){
     yum -y autoremove php* remi-release

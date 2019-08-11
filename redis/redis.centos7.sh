@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Redis script file example
-#     ./redis.centos.sh $1 $2 $3
-#     ./redis.centos.sh init 4.0.14 8.8.8.8
+#     ./redis.centos7.sh $1 $2 $3
+#     ./redis.centos7.sh init 4.0.14 8.8.8.8
 # Redis configuration file example
 #     http://download.redis.io/redis-stable/redis.conf
 

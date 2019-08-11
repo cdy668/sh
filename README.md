@@ -33,6 +33,10 @@
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init agent 4.0
     
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init agent 4.2
+    
+    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.0
+    
+    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.2
 
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init agent 4.0
     

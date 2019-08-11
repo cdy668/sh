@@ -17,6 +17,10 @@
     curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php56
     
     curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php73
+
+    curl -sSL https://0vj6.github.io/sh/php/php.centos6.sh | bash -s init php56
+    
+    curl -sSL https://0vj6.github.io/sh/php/php.centos6.sh | bash -s init php73
     
 ## redis
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Redis script file example
-#     ./redis.ubuntu.sh $1 $2 $3
-#     ./redis.ubuntu.sh init 4.0.14 8.8.8.8
+#     ./redis.ubuntu.18.04.sh $1 $2 $3
+#     ./redis.ubuntu.18.04.sh init 4.0.14 8.8.8.8
 # Redis configuration file example
 #     http://download.redis.io/redis-stable/redis.conf
 

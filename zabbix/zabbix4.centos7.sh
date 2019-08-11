@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # zabbix script file example
-#     ./zabbix.centos.sh $1 $2 $3
-#     ./zabbix.centos.sh init agent 4.0
+#     ./zabbix4.centos7.sh $1 $2 $3
+#     ./zabbix4.centos7.sh init agent 4.0
 
 init() {
     if [[ "$1" = "agent" ]] && [[ "$2" =~ ^4 ]]; then

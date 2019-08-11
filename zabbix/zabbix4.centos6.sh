@@ -5,7 +5,7 @@
 
 init() {
     if [[ "$1" = "agent" ]] && [[ "$2" =~ ^4 ]]; then
-        services zabbix-agent stop
+        service zabbix-agent stop
         yum -y remove zabbix-agent zabbix-release
         userdel -r zabbix
         rm -fr /etc/zabbix
@@ -39,9 +39,9 @@ init() {
         sed -i "s/# TLSPSKFile=/TLSPSKFile=\/etc\/zabbix\/psk\/zabbix-agent.psk/" /etc/zabbix/zabbix_agentd.conf
         mkdir -p /etc/zabbix/scripts /etc/zabbix/psk
         openssl rand -hex 32 > /etc/zabbix/psk/zabbix-agent.psk
-        services zabbix-agent restart
+        service zabbix-agent restart
         chkconfig zabbix-agent on
-        services zabbix-agent status
+        service zabbix-agent status
     elif [[ "$1" = "server" ]] && [[ "$2" =~ ^4 ]]; then
         echo "I am not ready yet"
     elif [[ "$1" = "proxy" ]] && [[ "$2" =~ ^4 ]]; then

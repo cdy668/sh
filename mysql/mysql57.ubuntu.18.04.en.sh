@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # MySQL script file example
-#     ./mysql57.ubuntu.sh $1 $2
-#     ./mysql57.ubuntu.sh init 5.7.25
+#     ./mysql57.ubuntu.18.04.en.sh $1 $2
+#     ./mysql57.ubuntu.18.04.en.sh init 5.7.25
 # MySQL 5.7 Reference Manual
 #     https://dev.mysql.com/doc/refman/5.7/en/
 

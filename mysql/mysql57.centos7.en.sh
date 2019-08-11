@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # MySQL script file example
-#     ./mysql57.centos.sh $1 $2
-#     ./mysql57.centos.sh init 5.7.25
+#     ./mysql57.centos.7.sh $1 $2
+#     ./mysql57.centos.7.sh init 5.7.25
 # MySQL 5.7 Reference Manual
 #     https://dev.mysql.com/doc/refman/5.7/en/
 

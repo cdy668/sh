@@ -27,6 +27,10 @@
     curl -sSL https://0vj6.github.io/sh/redis/redis.centos7.sh | bash -s init 4.0.14 127.0.0.1
     
     curl -sSL https://0vj6.github.io/sh/redis/redis.centos7.sh | bash -s init 5.0.5 127.0.0.1
+    
+    curl -sSL https://0vj6.github.io/sh/redis/redis.centos6.sh | bash -s init 4.0.14 127.0.0.1
+    
+    curl -sSL https://0vj6.github.io/sh/redis/redis.centos6.sh | bash -s init 5.0.5 127.0.0.1
 
     curl -sSL https://0vj6.github.io/sh/redis/redis.ubuntu.18.04.sh | bash -s init 4.0.14 127.0.0.1
     

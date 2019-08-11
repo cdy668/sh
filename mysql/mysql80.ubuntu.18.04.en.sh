@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # MySQL script file example
-#     ./mysql80.ubuntu.sh $1 $2
-#     ./mysql80.ubuntu.sh init 8.0.16
+#     ./mysql80.ubuntu.18.04.en.sh $1 $2
+#     ./mysql80.ubuntu.18.04.en.sh init 8.0.16
 # MySQL 8.0 Reference Manual
 #     https://dev.mysql.com/doc/refman/8.0/en/
 

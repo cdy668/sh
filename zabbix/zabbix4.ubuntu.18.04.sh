@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # zabbix script file example
-#     ./zabbix.ubuntu.sh $1 $2 $3
-#     ./zabbix.ubuntu.sh init agent 4.0
+#     ./zabbix4.ubuntu.18.04.sh $1 $2 $3
+#     ./zabbix4.ubuntu.18.04.sh init agent 4.0
 
 init() {
     if [[ "$1" = "agent" ]] && [[ "$2" =~ ^4 ]]; then

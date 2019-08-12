@@ -17,7 +17,7 @@ init(){
     rm -f /usr/lib64/libcrypto.so.1.0.0
     base_dir="/home/mysql"
     config_file="$base_dir/usr/local/mysql/my.cnf"
-    yum -y install libaio wget bzip2 numactl-libs
+    yum -y install libaio wget bzip2 numactl numactl-libs
     useradd -r -s /bin/false -m -d $base_dir -c 'MySQL Server' mysql
     cd $base_dir
     wget "https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-$1-linux-glibc2.12-x86_64.tar.xz"

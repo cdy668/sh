@@ -1,6 +1,7 @@
 # sh
 
     https://github.com/0vJ6/sh.git
+
 ## gogs
 
     curl -sSL https://0vj6.github.io/sh/gogs/gogs.centos7.sh | bash -s init 0.11.86 0.0.0.0

@@ -159,7 +159,7 @@ init(){
     systemctl start mysqld
     systemctl status mysqld
     systemctl enable mysqld
-    export mysql_root_password="$(openssl rand -base64 20)"
+    mysql_root_password="$(openssl rand -base64 20)"
     mysqladmin -uroot password "$mysql_root_password" 2>/dev/null
     echo "Please remember your MySQL database root password $mysql_root_password"
     # mysql -uroot -p"$mysql_root_password" -e "SELECT PLUGIN_NAME,PLUGIN_VERSION,PLUGIN_STATUS,LOAD_OPTION FROM information_schema.PLUGINS WHERE PLUGIN_NAME='validate_password'\G;"

@@ -1,7 +1,14 @@
 # sh
 
     https://github.com/0vJ6/sh.git
+## gogs
+
+    curl -sSL https://0vj6.github.io/sh/gogs/gogs.centos7.sh | bash -s init 0.11.86 0.0.0.0
+
+    curl -sSL https://0vj6.github.io/sh/gogs/gogs.centos6.sh | bash -s init 0.11.86 0.0.0.0
     
+    curl -sSL https://0vj6.github.io/sh/gogs/gogs.ubuntu.18.04.sh | bash -s init 0.11.86 0.0.0.0
+
 ## mysql
 
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos7.en.sh | bash -s init 5.7.26
@@ -52,9 +59,9 @@
 
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.0
     
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init server 4.0
-    
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.2
+    
+    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init server 4.0
 
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init agent 4.0
     

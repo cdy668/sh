@@ -18,7 +18,7 @@ init(){
     yum -y install yum-utils
     yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     yum-config-manager --enable remi-$1
-    yum -y install $1 $1-php-fpm $1-php-pecl-redis4 $1-php-pecl-memcache php-mysql php-mysqlnd
+    yum -y install $1
     ln -s /usr/bin/$1 /usr/bin/php
     php --ini
     php -v

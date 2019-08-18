@@ -141,6 +141,7 @@ init(){
     chown git:git $config_file
     chmod 600 $config_file
     cd $base_dir;sudo -ugit $base_dir/usr/local/gogs/gogs web >> $base_dir/var/log/gogs/start.log 2>&1 &
+    ps -o user,stime,etime,pid,ppid,command -u git
     sleep 3
     curl -s -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36" -d "db_type=SQLite3&db_host=&db_user=&db_passwd=&db_name=&ssl_mode=disable&db_path=%2Fhome%2Fgit%2Fvar%2Flib%2Fgogs%2Fdata%2Fgogs.db&app_name=Gogs&repo_root_path=%2Fhome%2Fgit%2Fvar%2Flib%2Fgogs%2Fgogs-repositories&run_user=git&domain=$bind_ip&ssh_port=22&http_port=3000&app_url=http%3A%2F%2F$bind_ip%3A3000%2F&log_root_path=%2Fhome%2Fgit%2Fvar%2Flog%2Fgogs&smtp_host=&smtp_from=&smtp_user=&smtp_passwd=&disable_gravatar=on&require_sign_in_view=on&admin_name=&admin_passwd=&admin_confirm_passwd=&admin_email=" http://$bind_ip:3000/install
 }

@@ -24,15 +24,25 @@
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.ubuntu.18.04.en.sh | bash -s init 8.0.16
     
-## php
+    ## mysql
 
-    curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php56
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos7.en.sh | bash -s init 5.7.26
     
-    curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php73
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos6.en.sh | bash -s init 5.7.26
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos7.en.sh | bash -s init 8.0.16
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos6.en.sh | bash -s init 8.0.16
+    
+## nginx
 
-    curl -sSL https://0vj6.github.io/sh/php/php.centos6.sh | bash -s init php56
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init 1.16.1
     
-    curl -sSL https://0vj6.github.io/sh/php/php.centos6.sh | bash -s init php73
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init 1.16.1
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init 1.8.1
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init 1.8.1
     
 ## redis
 

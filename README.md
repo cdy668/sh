@@ -26,13 +26,29 @@
     
 ## nginx
 
-    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init 1.16.1
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init stble 1.16.1
     
-    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init 1.16.1
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init stble 1.16.1
     
-    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init 1.8.1
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.ubuntu.18.04.sh | bash -s init stble 1.16.1
     
-    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init 1.8.1
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init stble 1.14.2
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init stble 1.14.2
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.ubuntu.18.04.sh | bash -s init stble 1.14.2
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init mainline 1.17.3
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init mainline 1.17.3
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.ubuntu.18.04.sh | bash -s init mainline 1.17.3
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos7.sh | bash -s init mainline 1.13.12
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.centos6.sh | bash -s init mainline 1.13.12
+    
+    curl -sSL https://0vj6.github.io/sh/nginx/nginx.ubuntu.18.04.sh | bash -s init mainline 1.13.12
     
 ## php
     

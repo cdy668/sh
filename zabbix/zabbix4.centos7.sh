@@ -138,7 +138,7 @@ init() {
         sed -i "s/# DBPort=/DBPort=3306/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# ListenPort=10051/ListenPort=10051/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# ListenIP=0.0.0.0/ListenIP=0.0.0.0/" /etc/zabbix/zabbix_server.conf
-        sed -i "s/# Timeout=3/Timeout=30/" /etc/zabbix/zabbix_server.conf
+        sed -i "s/# Timeout=4/Timeout=30/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# AllowRoot=0/AllowRoot=1/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# User=zabbix/User=root/" /etc/zabbix/zabbix_server.conf
         sed -i "s/AlertScriptsPath=\/usr\/lib\/zabbix\/alertscripts/AlertScriptsPath=\/etc\/zabbix\/scripts/" /etc/zabbix/zabbix_server.conf

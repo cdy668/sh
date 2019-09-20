@@ -134,7 +134,7 @@ init() {
         mysql -u"zabbix" -p"$mysql_zabbix_password" -h"127.0.0.1" -D"zabbix" -e "UPDATE zabbix.usrgrp SET gui_access = 3, users_status = 1 WHERE name = 'Guests'"
         mysql -u"zabbix" -p"$mysql_zabbix_password" -h"127.0.0.1" -D"zabbix" -e "UPDATE zabbix.usrgrp SET users_status = 1 WHERE name = 'No access to the frontend'"
         sed -i "s/# DBHost=localhost/DBHost=127.0.0.1/" /etc/zabbix/zabbix_server.conf
-        sed -i "s/# DBPassword=/DBPassword=$mysql_zabbix_password/" /etc/zabbix/zabbix_server.conf
+        echo "DBPassword=$mysql_zabbix_password" >> /etc/zabbix/zabbix_server.conf
         sed -i "s/# DBPort=/DBPort=3306/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# ListenPort=10051/ListenPort=10051/" /etc/zabbix/zabbix_server.conf
         sed -i "s/# ListenIP=0.0.0.0/ListenIP=0.0.0.0/" /etc/zabbix/zabbix_server.conf

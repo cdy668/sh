@@ -53,7 +53,7 @@ init(){
     echo "binlog_checksum                                        = CRC32"                                >> $config_file
     echo "# binlog-do-db                                         = "                                     >> $config_file
     echo "binlog_format                                          = ROW"                                  >> $config_file
-    echo "binlog-ignore-db                                       = mysql,sys,information_schema,performance_schema" >> $config_file
+    echo "# binlog-ignore-db                                     = mysql,sys,information_schema,performance_schema" >> $config_file
     echo "character-set-server                                   = utf8mb4"                              >> $config_file
     echo "collation-server                                       = utf8mb4_unicode_ci"                   >> $config_file
     echo "datadir                                                = $base_dir/usr/local/mysql/data"       >> $config_file

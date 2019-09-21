@@ -27,6 +27,7 @@ init(){
     echo "dual_log_enable=YES"                                                        >> /etc/vsftpd/vsftpd.conf
     echo "vsftpd_log_file=/var/log/vsftpd.log"                                        >> /etc/vsftpd/vsftpd.conf
     echo -e "administrator\n$(openssl rand -base64 20)" > /etc/vsftpd/virtual_user
+    chmod 600 /etc/vsftpd/virtual_user
     db_load -T -t hash -f /etc/vsftpd/virtual_user /etc/vsftpd/virtual_user.db
     chmod 600 /etc/vsftpd/virtual_user.db
     useradd -s /usr/sbin/nologin -m -d /home/administrator -c 'ftp virtual user' administrator

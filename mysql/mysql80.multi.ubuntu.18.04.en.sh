@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # MySQL script file example
-#     ./mysql80.multi.centos7.en.sh $1 $2 $3
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3306
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3308
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3310
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3312
+#     ./mysql80.multi.ubuntu.18.04.en.sh $1 $2 $3
+#     ./mysql80.multi.ubuntu.18.04.en.sh init 8.0.16 3306
+#     ./mysql80.multi.ubuntu.18.04.en.sh init 8.0.16 3308
+#     ./mysql80.multi.ubuntu.18.04.en.sh init 8.0.16 3310
+#     ./mysql80.multi.ubuntu.18.04.en.sh init 8.0.16 3312
 # MySQL 8.0 Reference Manual
 #     https://dev.mysql.com/doc/refman/8.0/en/
 
@@ -21,7 +21,7 @@ init(){
     rm -f /etc/init.d/mysqld$MYSQL_BIND_PORT*
     rm -fr /home/mysql/mysql$MYSQL_BIND_PORT*
     rm -fr /etc/my.cnf*
-    yum -y install libaio wget bzip2 numactl numactl-libs
+    apt -y install libaio-dev wget bzip2 libnuma-dev
     useradd -r -s /bin/false -m -d $MYSQL_HOME_DIR -c 'MySQL Server' mysql
     mkdir -p $MYSQL_BASE_DIR/usr/local
     mkdir -p $MYSQL_BASE_DIR/var/log/mysql
@@ -178,6 +178,7 @@ init(){
     systemctl start mysqld$MYSQL_BIND_PORT
     systemctl status mysqld$MYSQL_BIND_PORT
     systemctl enable mysqld$MYSQL_BIND_PORT
+    /lib/systemd/systemd-sysv-install enable mysqld$MYSQL_BIND_PORT
     mysqladmin -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot password "$MYSQL_ROOT_PASSWORD" 2>/dev/null
     echo "Please remember your MySQL database root password $MYSQL_ROOT_PASSWORD"
     mysql -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot -p"$MYSQL_ROOT_PASSWORD" -e "INSTALL PLUGIN validate_password SONAME 'validate_password.so';" 2>/dev/null

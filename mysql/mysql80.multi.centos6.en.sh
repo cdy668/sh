@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # MySQL script file example
-#     ./mysql80.multi.centos7.en.sh $1 $2 $3
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3306
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3308
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3310
-#     ./mysql80.multi.centos7.en.sh init 8.0.16 3312
+#     ./mysql80.multi.centos6.en.sh $1 $2 $3
+#     ./mysql80.multi.centos6.en.sh init 8.0.16 3306
+#     ./mysql80.multi.centos6.en.sh init 8.0.16 3308
+#     ./mysql80.multi.centos6.en.sh init 8.0.16 3310
+#     ./mysql80.multi.centos6.en.sh init 8.0.16 3312
 # MySQL 8.0 Reference Manual
 #     https://dev.mysql.com/doc/refman/8.0/en/
 
@@ -15,9 +15,8 @@ init(){
     MYSQL_CONFIG_FILE="$MYSQL_BASE_DIR/usr/local/mysql/my.cnf"
     MYSQL_HOME_DIR="/home/mysql"
     MYSQL_ROOT_PASSWORD="$(openssl rand -base64 20)"
-    systemctl daemon-reload
-    systemctl stop mysqld$MYSQL_BIND_PORT
-    systemctl status mysqld$MYSQL_BIND_PORT
+    service mysqld$MYSQL_BIND_PORT stop
+    service mysqld$MYSQL_BIND_PORT status
     rm -f /etc/init.d/mysqld$MYSQL_BIND_PORT*
     rm -fr /home/mysql/mysql$MYSQL_BIND_PORT*
     rm -fr /etc/my.cnf*
@@ -174,10 +173,8 @@ init(){
     sed -i "s/^mysqld_pid_file_path=/mysqld_pid_file_path=\/home\/mysql\/mysql$MYSQL_BIND_PORT\/usr\/local\/mysql\/data\/$(hostname).pid/"  /etc/init.d/mysqld$MYSQL_BIND_PORT
     sed -i "s/  conf=\/etc\/my.cnf/  conf=\/home\/mysql\/mysql$MYSQL_BIND_PORT\/usr\/local\/mysql\/my.cnf/"                                 /etc/init.d/mysqld$MYSQL_BIND_PORT
     chkconfig mysqld$MYSQL_BIND_PORT on
-    systemctl daemon-reload
-    systemctl start mysqld$MYSQL_BIND_PORT
-    systemctl status mysqld$MYSQL_BIND_PORT
-    systemctl enable mysqld$MYSQL_BIND_PORT
+    service mysqld$MYSQL_BIND_PORT start
+    service mysqld$MYSQL_BIND_PORT status
     mysqladmin -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot password "$MYSQL_ROOT_PASSWORD" 2>/dev/null
     echo "Please remember your MySQL database root password $MYSQL_ROOT_PASSWORD"
     mysql -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot -p"$MYSQL_ROOT_PASSWORD" -e "INSTALL PLUGIN validate_password SONAME 'validate_password.so';" 2>/dev/null

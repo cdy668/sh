@@ -11,9 +11,9 @@
 init(){
     MYSQL_BIND_PORT="$2"
     MYSQLX_BIND_PORT="$(($MYSQL_BIND_PORT+1))"
-    MYSQL_BASE_DIR="/home/mysql/mysql$MYSQL_BIND_PORT"
-    MYSQL_CONFIG_FILE="$MYSQL_BASE_DIR/usr/local/mysql/my.cnf"
     MYSQL_HOME_DIR="/home/mysql"
+    MYSQL_BASE_DIR="$MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT"
+    MYSQL_CONFIG_FILE="$MYSQL_BASE_DIR/usr/local/mysql/my.cnf"
     MYSQL_ROOT_PASSWORD="$(openssl rand -base64 20)"
     systemctl daemon-reload
     systemctl stop mysqld$MYSQL_BIND_PORT
@@ -41,15 +41,15 @@ init(){
     chmod 750 data
     echo "[client]"                                                                                                              > $MYSQL_CONFIG_FILE
     echo "default-character-set                                  = utf8mb4"                                                     >> $MYSQL_CONFIG_FILE
-    echo "socket                                                 = /home/mysql/mysql$MYSQL_BIND_PORT.sock"                      >> $MYSQL_CONFIG_FILE
+    echo "socket                                                 = $MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT.sock"                  >> $MYSQL_CONFIG_FILE
     echo "port                                                   = $MYSQL_BIND_PORT"                                            >> $MYSQL_CONFIG_FILE
-    echo "mysqlx_socket                                          = /home/mysql/mysqlx$MYSQLX_BIND_PORT.sock"                    >> $MYSQL_CONFIG_FILE
+    echo "mysqlx_socket                                          = $MYSQL_HOME_DIR/mysqlx$MYSQLX_BIND_PORT.sock"                >> $MYSQL_CONFIG_FILE
     echo "mysqlx_port                                            = $MYSQLX_BIND_PORT"                                           >> $MYSQL_CONFIG_FILE
     echo "[mysql]"                                                                                                              >> $MYSQL_CONFIG_FILE
     echo "default-character-set                                  = utf8mb4"                                                     >> $MYSQL_CONFIG_FILE
-    echo "socket                                                 = /home/mysql/mysql$MYSQL_BIND_PORT.sock"                      >> $MYSQL_CONFIG_FILE
+    echo "socket                                                 = $MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT.sock"                  >> $MYSQL_CONFIG_FILE
     echo "port                                                   = $MYSQL_BIND_PORT"                                            >> $MYSQL_CONFIG_FILE
-    echo "mysqlx_socket                                          = /home/mysql/mysqlx$MYSQLX_BIND_PORT.sock"                    >> $MYSQL_CONFIG_FILE
+    echo "mysqlx_socket                                          = $MYSQL_HOME_DIR/mysqlx$MYSQLX_BIND_PORT.sock"                >> $MYSQL_CONFIG_FILE
     echo "mysqlx_port                                            = $MYSQLX_BIND_PORT"                                           >> $MYSQL_CONFIG_FILE
     echo "[mysqld]"                                                                                                             >> $MYSQL_CONFIG_FILE
     echo "back_log                                               = 5120"                                                        >> $MYSQL_CONFIG_FILE
@@ -103,9 +103,9 @@ init(){
     echo "max_heap_table_size                                    = 128M"                                                        >> $MYSQL_CONFIG_FILE
     echo "open_files_limit                                       = 65535"                                                       >> $MYSQL_CONFIG_FILE
     echo "pid_file                                               = $MYSQL_BASE_DIR/usr/local/mysql/data/$(hostname).pid"        >> $MYSQL_CONFIG_FILE
-    echo "socket                                                 = /home/mysql/mysql$MYSQL_BIND_PORT.sock"                      >> $MYSQL_CONFIG_FILE
+    echo "socket                                                 = $MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT.sock"                  >> $MYSQL_CONFIG_FILE
     echo "port                                                   = $MYSQL_BIND_PORT"                                            >> $MYSQL_CONFIG_FILE
-    echo "mysqlx_socket                                          = /home/mysql/mysqlx$MYSQLX_BIND_PORT.sock"                    >> $MYSQL_CONFIG_FILE
+    echo "mysqlx_socket                                          = $MYSQL_HOME_DIR/mysqlx$MYSQLX_BIND_PORT.sock"                >> $MYSQL_CONFIG_FILE
     echo "mysqlx_port                                            = $MYSQLX_BIND_PORT"                                           >> $MYSQL_CONFIG_FILE
     echo "# read_only                                            = ON"                                                          >> $MYSQL_CONFIG_FILE
     echo "# read_rnd_buffer_size                                 = 2M"                                                          >> $MYSQL_CONFIG_FILE
@@ -154,8 +154,8 @@ init(){
     chmod 600 $MYSQL_CONFIG_FILE
     cp $MYSQL_BASE_DIR/usr/local/mysql/bin/mysql* /usr/bin
     chmod 755 /usr/bin/mysql*
-    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libssl.so.1.0.0 /usr/lib64/libssl.so.1.0.0
-    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libcrypto.so.1.0.0 /usr/lib64/libcrypto.so.1.0.0
+    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libssl.so* /usr/lib64/
+    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
     ulimit -n 655350
     # /etc/security/limits.conf
     # * soft nproc 655350

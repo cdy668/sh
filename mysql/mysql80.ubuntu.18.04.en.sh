@@ -148,8 +148,8 @@ init(){
     cp $base_dir/usr/local/mysql/bin/mysql* /usr/bin
     chmod 755 /usr/bin/mysql*
     ln -s $config_file /etc/my.cnf
-    cp /home/mysql/usr/local/mysql/lib/libssl.so.1.0.0 /usr/lib/libssl.so.1.0.0
-    cp /home/mysql/usr/local/mysql/lib/libcrypto.so.1.0.0 /usr/lib/libcrypto.so.1.0.0
+    cp /home/mysql/usr/local/mysql/lib/libssl.so* /usr/lib64/
+    cp /home/mysql/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
     ulimit -n 655350
     # /etc/security/limits.conf
     # * soft nproc 655350
@@ -167,6 +167,7 @@ init(){
     systemctl start mysqld
     systemctl status mysqld
     systemctl enable mysqld
+    /lib/systemd/systemd-sysv-install enable mysqld
     mysql_root_password="$(openssl rand -base64 20)"
     mysqladmin -uroot password "$mysql_root_password" 2>/dev/null
     echo "Please remember your MySQL database root password $mysql_root_password"

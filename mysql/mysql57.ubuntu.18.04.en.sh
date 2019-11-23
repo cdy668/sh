@@ -159,6 +159,7 @@ init(){
     systemctl start mysqld
     systemctl status mysqld
     systemctl enable mysqld
+    /lib/systemd/systemd-sysv-install enable mysqld
     mysql_root_password="$(openssl rand -base64 20)"
     mysqladmin -uroot password "$mysql_root_password" 2>/dev/null
     echo "Please remember your MySQL database root password $mysql_root_password"

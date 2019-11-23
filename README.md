@@ -14,16 +14,26 @@
 
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos7.en.sh | bash -s init 5.7.26
     
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos7.en.sh | bash -s init 5.7.26 3306
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos7.en.sh | bash -s init 5.7.26 3308
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos7.en.sh | bash -s init 5.7.26 3310
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos7.en.sh | bash -s init 5.7.26 3312
+    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos6.en.sh | bash -s init 5.7.26
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos6.en.sh | bash -s init 5.7.26 3306
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos6.en.sh | bash -s init 5.7.26 3308
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos6.en.sh | bash -s init 5.7.26 3310
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos6.en.sh | bash -s init 5.7.26 3312
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos7.en.sh | bash -s init 8.0.16
     
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos6.en.sh | bash -s init 8.0.16
-    
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.ubuntu.18.04.en.sh | bash -s init 5.7.26
-    
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.ubuntu.18.04.en.sh | bash -s init 8.0.16
-
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos7.en.sh | bash -s init 8.0.16 3306
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos7.en.sh | bash -s init 8.0.16 3308
@@ -31,7 +41,9 @@
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos7.en.sh | bash -s init 8.0.16 3310
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos7.en.sh | bash -s init 8.0.16 3312
-
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos6.en.sh | bash -s init 8.0.16
+    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos6.en.sh | bash -s init 8.0.16 3306
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos6.en.sh | bash -s init 8.0.16 3308
@@ -39,7 +51,19 @@
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos6.en.sh | bash -s init 8.0.16 3310
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos6.en.sh | bash -s init 8.0.16 3312
-
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.ubuntu.18.04.en.sh | bash -s init 5.7.26
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.ubuntu.18.04.en.sh | bash -s init 5.7.26 3306
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.ubuntu.18.04.en.sh | bash -s init 5.7.26 3308
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.ubuntu.18.04.en.sh | bash -s init 5.7.26 3310
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.ubuntu.18.04.en.sh | bash -s init 5.7.26 3312
+    
+    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.ubuntu.18.04.en.sh | bash -s init 8.0.16
+    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.ubuntu.18.04.en.sh | bash -s init 8.0.16 3306
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.ubuntu.18.04.en.sh | bash -s init 8.0.16 3308

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Redis script file example
-#     ./redis.centos6.sh $1 $2 $3
-#     ./redis.centos6.sh init 4.0.14 8.8.8.8
+#     ./redis.centos6.sh $1 $2 $3 $4
+#     ./redis.centos6.sh init 4.0.14 8.8.8.8 6379
 # Redis configuration file example
 #     http://download.redis.io/redis-stable/redis.conf
 
@@ -14,7 +14,7 @@ init(){
     config_file="$base_dir/etc/redis/redis.conf"
     bind="$2"
     password="$(openssl rand -base64 20)"
-    port="7001"
+    port="$3"
     pidfile="$base_dir/var/run/redis/redis_$port.pid"
     logfile="$base_dir/var/log/redis/redis_$port.log"
     dir="$base_dir/var/lib/redis"
@@ -120,6 +120,6 @@ init(){
 
 case $1 in
     init)
-        init "$2" "$3"
+        init "$2" "$3" "$4"
     ;;
 esac

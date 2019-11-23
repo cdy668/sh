@@ -24,7 +24,13 @@ init() {
         rm -fr /etc/rc.d/rc5.d/S90zabbix*
         rm -f /var/lib/alternatives/zabbix-web-font
         setenforce 0
-        yum -y install https://repo.zabbix.com/zabbix/$2/rhel/7/x86_64/zabbix-release-$2-1.el7.noarch.rpm
+        if [[ "$2" = "4.0" ]];then
+            yum -y install https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.el7.noarch.rpm
+            yum clean all
+        elif [[ "$2" =~ ^4.2|^4.4 ]];then
+            yum -y install https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-release-4.4-1.el7.noarch.rpm
+            yum clean all
+        fi
         yum -y install zabbix-agent bc net-tools wget curl chkconfig
         cp /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bak
         sed -i "s/# ListenPort=10050/ListenPort=10050/" /etc/zabbix/zabbix_agentd.conf
@@ -52,12 +58,6 @@ init() {
         systemctl enable zabbix-agent
         systemctl status zabbix-agent
     elif [[ "$1" = "server" ]] && [[ "$2" =~ ^4 ]]; then
-        # Although Zabbix server 4.2 is not working on centos 6.x, But you can compile the source code
-        # If your zabbix version is 4.0.x, maybe you will see something in /var/log/httpd/error_log
-        # Look at this in /var/log/httpd/error_log
-        #     configuration error:  couldn't perform authentication. AuthType not set!: /zabbix/
-        # Maybe you have to upgrade httpd version to 2.4 or change web server
-        # If you choose nginx, you have to know how to configuration
         systemctl daemon-reload
         systemctl stop zabbix-agent
         systemctl stop zabbix-server
@@ -87,7 +87,13 @@ init() {
         mysql_root_password="$(grep "^Please remember your MySQL database root password" /tmp/init_mysql.log | awk '{print $NF}')"
         rm -f /tmp/init_mysql.log
         curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php54
-        yum -y install https://repo.zabbix.com/zabbix/$2/rhel/7/x86_64/zabbix-release-$2-1.el7.noarch.rpm
+        if [[ "$2" = "4.0" ]];then
+            yum -y install https://repo.zabbix.com/zabbix/4.0/rhel/7/x86_64/zabbix-release-4.0-2.el7.noarch.rpm
+            yum clean all
+        elif [[ "$2" =~ ^4.2|^4.4 ]];then
+            yum -y install https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-release-4.4-1.el7.noarch.rpm
+            yum clean all
+        fi
         yum -y install zabbix-server-mysql zabbix-web-mysql zabbix-agent zabbix-get zabbix-web httpd
         cp /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bak
         sed -i "s/# ListenPort=10050/ListenPort=10050/" /etc/zabbix/zabbix_agentd.conf
@@ -182,35 +188,12 @@ init() {
         systemctl restart httpd
         systemctl enable httpd
         systemctl status httpd
-        echo "http://127.0.0.1/zabbix Admin@$website_password"
-    elif [[ "$1" = "proxy" ]] && [[ "$2" =~ ^4 ]]; then
-        echo "I am not ready yet"
-    elif [[ "$1" = "java" ]] && [[ "$2" =~ ^4 ]]; then
-        echo "I am not ready yet"
-    elif [[ "$1" = "agent" ]]; then
-        yum -y update zabbix-agent
-        systemctl restart zabbix-agent
-        systemctl enable zabbix-agent
-        systemctl status zabbix-agent
-    elif [[ "$1" = "server" ]]; then
-        yum -y update zabbix-server
-        systemctl restart zabbix-server
-        systemctl enable zabbix-server
-        systemctl status zabbix-server
-    elif [[ "$1" = "proxy" ]]; then
-        echo "I am not ready yet"
-    elif [[ "$1" = "java" ]]; then
-        echo "I am not ready yet"
-    else
-        echo "I am not ready yet"
+        echo "http://0.0.0.0/zabbix Admin@$website_password"
     fi
 }
 
 case $1 in
     init)
         init "$2" "$3"
-    ;;
-    update)
-        update "$2" "$3"
     ;;
 esac

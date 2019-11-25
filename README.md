@@ -128,6 +128,14 @@
     
     curl -sSL https://0vj6.github.io/sh/vsftpd/vsftpd.centos6.sh | bash -s init
 
+## node.js
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos7.sh | bash -s init 13.2.0
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos6.sh | bash -s init 13.2.0
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.ubuntu.18.04.sh | bash -s init 13.2.0
+
 ## zabbix
     
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init agent 4.0

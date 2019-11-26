@@ -153,8 +153,8 @@ init(){
     chmod 600 $MYSQL_CONFIG_FILE
     cp $MYSQL_BASE_DIR/usr/local/mysql/bin/mysql* /usr/bin
     chmod 755 /usr/bin/mysql*
-    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libssl.so* /usr/lib64/
-    cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
+    # cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libssl.so* /usr/lib64/
+    # cp /home/mysql/mysql$MYSQL_BIND_PORT/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
     ulimit -n 655350
     # /etc/security/limits.conf
     # * soft nproc 655350

@@ -147,8 +147,8 @@ init(){
     cp $base_dir/usr/local/mysql/bin/mysql* /usr/bin
     chmod 755 /usr/bin/mysql*
     ln -s $config_file /etc/my.cnf
-    cp /home/mysql/usr/local/mysql/lib/libssl.so* /usr/lib64/
-    cp /home/mysql/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
+    # cp /home/mysql/usr/local/mysql/lib/libssl.so* /usr/lib64/
+    # cp /home/mysql/usr/local/mysql/lib/libcrypto.so* /usr/lib64/
     ulimit -n 655350
     # /etc/security/limits.conf
     # * soft nproc 655350

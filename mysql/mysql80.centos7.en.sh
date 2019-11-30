@@ -89,6 +89,7 @@ init(){
     echo "local_infile                                           = OFF"                                  >> $config_file
     echo "log_bin                                                = $base_dir/var/log/mysql/mysql_bin"    >> $config_file
     echo "log_error                                              = $base_dir/var/log/mysql/mysql_error.log" >> $config_file
+    echo "# log-slave-updates                                    = 1"                                    >> $config_file
     echo "long_query_time                                        = 1"                                    >> $config_file
     echo "# master_info_repository                               = TABLE"                                >> $config_file
     echo "max_allowed_packet                                     = 512M"                                 >> $config_file
@@ -101,9 +102,9 @@ init(){
     echo "port                                                   = 3306"                                 >> $config_file
     echo "# read_only                                            = ON"                                   >> $config_file
     echo "# read_rnd_buffer_size                                 = 2M"                                   >> $config_file
-    echo "# relay_log_index                                      = relay_log.index"                      >> $config_file
+    echo "# relay_log_index                                      = $base_dir/var/log/mysql/relay_log.index" >> $config_file
     echo "# relay_log_recovery                                   = 1"                                    >> $config_file
-    echo "# relay_log                                            = relay_log"                            >> $config_file
+    echo "# relay_log                                            = $base_dir/var/log/mysql/relay_log"    >> $config_file
     echo "# replicate-do-db                                      = "                                     >> $config_file
     echo "# replicate-do-table                                   = "                                     >> $config_file
     echo "# replicate-ignore-db                                  = "                                     >> $config_file

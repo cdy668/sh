@@ -94,6 +94,7 @@ init(){
     echo "local_infile                                           = OFF"                                                         >> $MYSQL_CONFIG_FILE
     echo "log_bin                                                = $MYSQL_BASE_DIR/var/log/mysql/mysql_bin"                     >> $MYSQL_CONFIG_FILE
     echo "log_error                                              = $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log"               >> $MYSQL_CONFIG_FILE
+    echo "# log-slave-updates                                    = 1"                                                           >> $MYSQL_CONFIG_FILE
     echo "long_query_time                                        = 1"                                                           >> $MYSQL_CONFIG_FILE
     echo "# master_info_repository                               = TABLE"                                                       >> $MYSQL_CONFIG_FILE
     echo "max_allowed_packet                                     = 512M"                                                        >> $MYSQL_CONFIG_FILE
@@ -109,9 +110,9 @@ init(){
     echo "mysqlx_port                                            = $MYSQLX_BIND_PORT"                                           >> $MYSQL_CONFIG_FILE
     echo "# read_only                                            = ON"                                                          >> $MYSQL_CONFIG_FILE
     echo "# read_rnd_buffer_size                                 = 2M"                                                          >> $MYSQL_CONFIG_FILE
-    echo "# relay_log_index                                      = relay_log.index"                                             >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_index                                      = $MYSQL_BASE_DIR/var/log/mysql/relay_log.index"               >> $MYSQL_CONFIG_FILE
     echo "# relay_log_recovery                                   = 1"                                                           >> $MYSQL_CONFIG_FILE
-    echo "# relay_log                                            = relay_log"                                                   >> $MYSQL_CONFIG_FILE
+    echo "# relay_log                                            = $MYSQL_BASE_DIR/var/log/mysql/relay_log"                     >> $MYSQL_CONFIG_FILE
     echo "# replicate-do-db                                      = "                                                            >> $MYSQL_CONFIG_FILE
     echo "# replicate-do-table                                   = "                                                            >> $MYSQL_CONFIG_FILE
     echo "# replicate-ignore-db                                  = "                                                            >> $MYSQL_CONFIG_FILE

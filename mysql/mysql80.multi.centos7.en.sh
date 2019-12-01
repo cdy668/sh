@@ -121,6 +121,7 @@ init(){
     echo "# replicate-wild-ignore-table                          = "                                                            >> $MYSQL_CONFIG_FILE
     echo "# report_host                                          = slave_host"                                                  >> $MYSQL_CONFIG_FILE
     echo "# relay_log_info_repository                            = TABLE"                                                       >> $MYSQL_CONFIG_FILE
+    echo "# slave-skip-errors                                    = 1062,1032,1236"                                              >> $MYSQL_CONFIG_FILE
     echo "server_id                                              = $(date "+%s")"                                               >> $MYSQL_CONFIG_FILE
     echo "skip_external_locking"                                                                                                >> $MYSQL_CONFIG_FILE
     echo "# skip-grant-tables"                                                                                                  >> $MYSQL_CONFIG_FILE

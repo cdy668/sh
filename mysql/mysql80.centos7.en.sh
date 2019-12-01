@@ -113,6 +113,7 @@ init(){
     echo "# replicate-wild-ignore-table                          = "                                     >> $config_file
     echo "# report_host                                          = slave_host"                           >> $config_file
     echo "# relay_log_info_repository                            = TABLE"                                >> $config_file
+    echo "# slave-skip-errors                                    = 1062,1032,1236"                       >> $config_file
     echo "server_id                                              = $(date "+%s")"                        >> $config_file
     echo "skip_external_locking"                                                                         >> $config_file
     echo "# skip-grant-tables"                                                                           >> $config_file

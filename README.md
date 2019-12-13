@@ -98,6 +98,14 @@
     
     curl -sSL https://0vj6.github.io/sh/nginx/nginx.ubuntu.18.04.sh | bash -s init mainline 1.13.12
 
+## node.js
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos7.sh | bash -s init 13.2.0
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos6.sh | bash -s init 13.2.0
+    
+    curl -sSL https://0vj6.github.io/sh/node.js/node.js.ubuntu.18.04.sh | bash -s init 13.2.0
+
 ## php
     
     curl -sSL https://0vj6.github.io/sh/php/php.centos7.sh | bash -s init php56
@@ -122,19 +130,15 @@
     
     curl -sSL https://0vj6.github.io/sh/redis/redis.ubuntu.18.04.sh | bash -s init 5.0.5 127.0.0.1 6379
 
+## ubuntu
+
+    curl -sSL https://0vj6.github.io/sh/init/init.ubuntu.18.04.sh | bash -s desktop
+
 ## vsftpd
     
     curl -sSL https://0vj6.github.io/sh/vsftpd/vsftpd.centos7.sh | bash -s init
     
     curl -sSL https://0vj6.github.io/sh/vsftpd/vsftpd.centos6.sh | bash -s init
-
-## node.js
-    
-    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos7.sh | bash -s init 13.2.0
-    
-    curl -sSL https://0vj6.github.io/sh/node.js/node.js.centos6.sh | bash -s init 13.2.0
-    
-    curl -sSL https://0vj6.github.io/sh/node.js/node.js.ubuntu.18.04.sh | bash -s init 13.2.0
 
 ## zabbix
     

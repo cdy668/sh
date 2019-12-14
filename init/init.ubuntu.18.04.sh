@@ -51,7 +51,7 @@ desktop(){
                         qbittorrent \
                         thunderbird \
                         dconf-editor
-    sudo apt -y autoremove --purge libreoffice* remmina*
+    sudo apt -y autoremove --purge libreoffice* remmina* firefox*
     # wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
     # sudo dpkg --install chrome-remote-desktop_current_amd64.deb
     # sudo apt update
@@ -79,6 +79,7 @@ desktop(){
     sudo snap install postman
     sudo snap install --classic pycharm-community
     sudo snap install canonical-livepatch
+    sudo snap install firefox
     sudo mv /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com.bakup."$(date +"%Y%m%d%H%M%S")"
     sudo apt -y install gnome-shell-extension-dashtodock gnome-shell-extension-autohidetopbar
     sudo rm -f /var/cache/apt/archives/*.deb

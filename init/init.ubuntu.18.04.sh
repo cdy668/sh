@@ -52,11 +52,21 @@ desktop(){
                         thunderbird \
                         dconf-editor
     sudo apt -y autoremove --purge libreoffice* remmina*
+    # wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
+    # sudo dpkg --install chrome-remote-desktop_current_amd64.deb
+    # sudo apt update
+    # sudo apt install --assume-yes --fix-broken
+    # rm -f chrome-remote-desktop_current_amd64.deb
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     sudo dpkg --install google-chrome-stable_current_amd64.deb
     sudo apt update
     sudo apt install --assume-yes --fix-broken
     rm -f google-chrome-stable_current_amd64.deb
+    wget https://repo.steampowered.com/steam/archive/precise/steam_latest.deb
+    sudo dpkg --install steam_latest.deb
+    sudo apt update
+    sudo apt install --assume-yes --fix-broken
+    rm -f steam_latest.deb
     curl -s https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
     echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" | sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
     sudo apt update && sudo apt -y install signal-desktop

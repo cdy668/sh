@@ -146,6 +146,7 @@ init(){
     echo "tmp_table_size                                         = 128M"                                                        >> $MYSQL_CONFIG_FILE
     echo "transaction_isolation                                  = REPEATABLE-READ"                                             >> $MYSQL_CONFIG_FILE
     echo "user                                                   = mysql"                                                       >> $MYSQL_CONFIG_FILE
+    echo "# validate_password_policy                             = MEDIUM"                                                      >> $MYSQL_CONFIG_FILE
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_slow.log
     chown mysql:mysql $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log
@@ -182,8 +183,6 @@ init(){
     systemctl enable mysqld$MYSQL_BIND_PORT
     mysqladmin -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot password "$MYSQL_ROOT_PASSWORD" 2>/dev/null
     echo "Please remember your MySQL database root password $MYSQL_ROOT_PASSWORD"
-    mysql -S /home/mysql/mysql$MYSQL_BIND_PORT.sock -uroot -p"$MYSQL_ROOT_PASSWORD" -e "INSTALL PLUGIN validate_password SONAME 'validate_password.so';" 2>/dev/null
-    echo "validate_password_policy                               = MEDIUM"                                                      >> $MYSQL_CONFIG_FILE
 }
 
 case $1 in

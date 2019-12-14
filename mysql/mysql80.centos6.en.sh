@@ -138,6 +138,7 @@ init(){
     echo "tmp_table_size                                         = 128M"                                 >> $config_file
     echo "transaction_isolation                                  = REPEATABLE-READ"                      >> $config_file
     echo "user                                                   = mysql"                                >> $config_file
+    echo "# validate_password_policy                             = MEDIUM"                               >> $config_file
     touch $base_dir/var/log/mysql/mysql_error.log
     touch $base_dir/var/log/mysql/mysql_slow.log
     chown mysql:mysql $base_dir/var/log/mysql/mysql_error.log
@@ -169,9 +170,6 @@ init(){
     mysql_root_password="$(openssl rand -base64 20)"
     mysqladmin -uroot password "$mysql_root_password" 2>/dev/null
     echo "Please remember your MySQL database root password $mysql_root_password"
-    # mysql -uroot -p"$mysql_root_password" -e "SELECT PLUGIN_NAME,PLUGIN_VERSION,PLUGIN_STATUS,LOAD_OPTION FROM information_schema.PLUGINS WHERE PLUGIN_NAME='validate_password'\G;"
-    mysql -uroot -p"$mysql_root_password" -e "INSTALL PLUGIN validate_password SONAME 'validate_password.so';" 2>/dev/null
-    echo "validate_password_policy                               = MEDIUM" >> $config_file
 }
 
 case $1 in

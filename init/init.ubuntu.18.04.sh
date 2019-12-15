@@ -50,7 +50,14 @@ desktop(){
                         gimp \
                         qbittorrent \
                         thunderbird \
-                        dconf-editor
+                        dconf-editor \
+                        fcitx \
+                        fcitx-frontend-gtk2 \
+                        fcitx-frontend-gtk3 \
+                        fcitx-frontend-qt4 \
+                        fcitx-libpinyin \
+                        fcitx-libs \
+                        fcitx-module-kimpanel
     sudo apt -y autoremove --purge libreoffice* remmina* firefox*
     # wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
     # sudo dpkg --install chrome-remote-desktop_current_amd64.deb

@@ -95,6 +95,7 @@ desktop(){
     sudo snap install --classic pycharm-community
     sudo snap install canonical-livepatch
     sudo snap install firefox
+    sudo snap install --classic powershell
     sudo mv /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com.bakup."$(date +"%Y%m%d%H%M%S")"
     sudo apt -y install gnome-shell-extension-dashtodock gnome-shell-extension-autohidetopbar
     sudo rm -f /var/cache/apt/archives/*.deb

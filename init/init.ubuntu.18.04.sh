@@ -40,7 +40,8 @@ desktop(){
                         python-virtualenv \
                         python3-pip \
                         python3-virtualenv \
-                        lsb-release
+                        lsb-release \
+                        ansible
     sudo apt -y install ubuntu-gnome-desktop \
                         gnome-tweak-tool \
                         firewall-config \
@@ -60,6 +61,11 @@ desktop(){
                         fcitx-libs \
                         fcitx-module-kimpanel
     sudo apt -y autoremove --purge libreoffice* remmina* firefox*
+    # wget https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
+    # sudo dpkg --install mysql-apt-config_0.8.14-1_all.deb
+    # sudo apt update
+    # sudo apt install --assume-yes --fix-broken
+    # rm -f mysql-apt-config_0.8.14-1_all.deb
     # wget https://dl.google.com/linux/direct/chrome-remote-desktop_current_amd64.deb
     # sudo dpkg --install chrome-remote-desktop_current_amd64.deb
     # sudo apt update

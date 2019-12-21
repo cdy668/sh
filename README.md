@@ -2,6 +2,10 @@
 
     https://github.com/0vJ6/sh.git
 
+## centos
+
+    curl -sSL https://0vj6.github.io/sh/init/init.centos7.sh | bash -s desktop
+
 ## gogs
 
     curl -sSL https://0vj6.github.io/sh/gogs/gogs.centos7.sh | bash -s init 0.11.86 0.0.0.0

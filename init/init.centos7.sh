@@ -2,6 +2,9 @@
 # centos script file example
 #     ./init.centos7.sh $1
 #     ./init.centos7.sh desktop
+# Setting up Chrome Remote Desktop on CentOS
+#     https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
+#     https://remotedesktop.google.com/headless
 
 desktop(){
     sudo yum -y update

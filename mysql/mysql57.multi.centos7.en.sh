@@ -19,7 +19,7 @@ init(){
     systemctl stop mysqld$MYSQL_BIND_PORT
     systemctl status mysqld$MYSQL_BIND_PORT
     rm -f /etc/init.d/mysqld$MYSQL_BIND_PORT*
-    rm -fr /home/mysql/mysql$MYSQL_BIND_PORT*
+    rm -fr $MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT*
     rm -fr /etc/my.cnf*
     yum -y install libaio wget bzip2 numactl numactl-libs
     useradd -r -s /bin/false -m -d $MYSQL_HOME_DIR -c 'MySQL Server' mysql

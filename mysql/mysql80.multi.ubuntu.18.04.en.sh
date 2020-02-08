@@ -19,7 +19,7 @@ init(){
     systemctl stop mysqld$MYSQL_BIND_PORT
     systemctl status mysqld$MYSQL_BIND_PORT
     rm -f /etc/init.d/mysqld$MYSQL_BIND_PORT*
-    rm -fr /home/mysql/mysql$MYSQL_BIND_PORT*
+    rm -fr $MYSQL_HOME_DIR/mysql$MYSQL_BIND_PORT*
     rm -fr /etc/my.cnf*
     apt -y install libaio-dev wget bzip2 libnuma-dev
     useradd -r -s /bin/false -m -d $MYSQL_HOME_DIR -c 'MySQL Server' mysql
@@ -146,7 +146,6 @@ init(){
     echo "tmp_table_size                                         = 128M"                                                        >> $MYSQL_CONFIG_FILE
     echo "transaction_isolation                                  = REPEATABLE-READ"                                             >> $MYSQL_CONFIG_FILE
     echo "user                                                   = mysql"                                                       >> $MYSQL_CONFIG_FILE
-    echo "# validate_password_policy                             = MEDIUM"                                                      >> $MYSQL_CONFIG_FILE
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_slow.log
     chown mysql:mysql $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log

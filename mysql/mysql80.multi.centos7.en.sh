@@ -87,7 +87,6 @@ init(){
     echo "innodb_max_dirty_pages_pct                             = 75"                                                          >> $MYSQL_CONFIG_FILE
     echo "# innodb_page_size                                     = 4K"                                                          >> $MYSQL_CONFIG_FILE
     echo "innodb_read_io_threads                                 = 8"                                                           >> $MYSQL_CONFIG_FILE
-    echo "# innodb_support_xa                                    = 1"                                                           >> $MYSQL_CONFIG_FILE
     echo "innodb_thread_concurrency                              = 48"                                                          >> $MYSQL_CONFIG_FILE
     echo "innodb_write_io_threads                                = 16"                                                          >> $MYSQL_CONFIG_FILE
     echo "join_buffer_size                                       = 8M"                                                          >> $MYSQL_CONFIG_FILE

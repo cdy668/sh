@@ -35,7 +35,11 @@ desktop(){
                         redhat-lsb \
                         yum-utils \
                         ansible \
-                        epel-release
+                        epel-release \
+                        cockpit \
+                        cockpit-ws \
+                        cockpit-dashboard \
+                        cockpit-storaged
     sudo wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
     sudo yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     sudo yum -y install https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm

@@ -41,9 +41,14 @@ desktop(){
                         python3-pip \
                         python3-virtualenv \
                         lsb-release \
-                        ansible
+                        ansible \
+                        nmap \
+                        hydra \
+                        sqlmap \
+                        whois
     sudo apt -y install ubuntu-gnome-desktop \
                         gnome-tweak-tool \
+                        gnome-tweaks \
                         firewall-config \
                         filezilla \
                         virtualbox \
@@ -53,6 +58,8 @@ desktop(){
                         qbittorrent \
                         thunderbird \
                         dconf-editor \
+                        zenmap \
+                        wireshark \
                         fcitx \
                         fcitx-frontend-gtk2 \
                         fcitx-frontend-gtk3 \

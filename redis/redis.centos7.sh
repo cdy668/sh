@@ -161,7 +161,7 @@ init(){
     echo "requirepass                          \"$password\""                                                                                         >> $config_file
     wget -O "/usr/lib/systemd/system/redis_$port.service" https://0vj6.github.io/sh/redis/redis.service
     wget -O "/usr/libexec/redis_$port-shutdow" https://0vj6.github.io/sh/redis/redis-shutdown
-    sed -i "s/\/etc\/redis.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/" /usr/lib/systemd/system/redis.service
+    sed -i "s/\/etc\/redis.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/" /usr/lib/systemd/system/redis_$port.service
     sed -i "s/\/etc\/\$SERVICE_NAME.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/libexec/redis_$port-shutdow
     sed -i "s/SERVICE_NAME=redis/SERVICE_NAME=redis_$port/g" /usr/libexec/redis_$port-shutdow
     systemctl enable redis_$port

@@ -4,23 +4,68 @@
 #     ./redis.centos6.sh init 4.0.14 8.8.8.8 6379
 # Redis configuration file example
 #     http://download.redis.io/redis-stable/redis.conf
+#
+#
+# if you want to create a redis cluster on two servers, you need three redis nodes per server, and then refer to the following steps
+#    
+# step 1. each redis node needs to enable the following options
+#     a. cluster-enabled                    yes
+#     b. cluster-node-timeout               11000
+#     c. cluster-require-full-coverage      no
+# note: first close the redis node, then modify the configuration, and finally start the redis node
+#    
+# step 2. execute a command on any redis node to create a redis cluster
+# redis-cli --cluster create 192.168.1.1:6379 \
+#                            192.168.1.1:6380 \
+#                            192.168.1.1:6381 \
+#                            192.168.1.2:6382 \
+#                            192.168.1.2:6383 \
+#                            192.168.1.2:6384 \
+#           --cluster-replicas 1 -a 'you redis password' to create cluster
+# note: each redis node password must be the same
+#
+# step 3. Add firewall settings to /etc/sysconfig/iptables
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6379 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6380 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6381 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6382 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6383 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 6384 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6379 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6380 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6381 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6382 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6383 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 6384 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16379 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16380 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16381 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16382 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16383 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.1 --dport 16384 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16379 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16380 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16381 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16382 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16383 -j ACCEPT
+# -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16384 -j ACCEPT
 
 init(){
-    kill -9 "$(ps -o pid -u redis | grep -v "PID")"
-    rm -f /usr/bin/redis-server
-    rm -f /usr/bin/redis-cli
-    userdel -r redis
-    base_dir="/home/redis"
-    config_file="$base_dir/etc/redis/redis.conf"
+    # kill -9 "$(ps -o pid -u redis | grep -v "PID")"
     bind="$2"
-    password="$(openssl rand -base64 20)"
     port="$3"
+    # rm -f /usr/bin/redis-server
+    # rm -f /usr/bin/redis-cli
+    # userdel -r redis
+    base_dir="/home/redis"
+    config_file="$base_dir/etc/redis/redis_$port.conf"
+    password="$(openssl rand -base64 20)"
     pidfile="$base_dir/var/run/redis/redis_$port.pid"
     logfile="$base_dir/var/log/redis/redis_$port.log"
-    dir="$base_dir/var/lib/redis"
+    data_dir="$base_dir/var/lib/redis"
     dbfilename="dump_$port.rdb"
     appendfilename="appendonly_$port.aof"
-    yum -y install openssl-devel make gcc libyaml
+    yum -y install openssl-devel make gcc libyaml wget
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
     curl -sSL https://get.rvm.io | bash -s stable
     source /etc/profile.d/rvm.sh
@@ -69,7 +114,7 @@ init(){
     echo "save                                 300 10"                                                                                                >> $config_file
     echo "save                                 60 10000"                                                                                              >> $config_file
     echo "dbfilename                           \"$dbfilename\""                                                                                       >> $config_file
-    echo "dir                                  \"$dir\""                                                                                              >> $config_file
+    echo "dir                                  \"$data_dir\""                                                                                         >> $config_file
     echo "slave-serve-stale-data               yes"                                                                                                   >> $config_file
     echo "slave-read-only                      yes"                                                                                                   >> $config_file
     echo "repl-diskless-sync                   no"                                                                                                    >> $config_file
@@ -112,8 +157,8 @@ init(){
     echo "hz                                   10"                                                                                                    >> $config_file
     echo "aof-rewrite-incremental-fsync        yes"                                                                                                   >> $config_file
     echo "# Generated by CONFIG REWRITE"                                                                                                              >> $config_file
-    echo "masterauth                           \"$password\""                                                                                       >> $config_file
-    echo "requirepass                          \"$password\""                                                                                       >> $config_file
+    echo "masterauth                           \"$password\""                                                                                         >> $config_file
+    echo "requirepass                          \"$password\""                                                                                         >> $config_file
     sudo -uredis $base_dir/usr/local/redis-$1/src/redis-server $config_file
     ps -o user,stime,etime,pid,ppid,command -u redis
 }

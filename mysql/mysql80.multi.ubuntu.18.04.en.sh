@@ -93,9 +93,7 @@ init(){
     echo "local_infile                                           = OFF"                                                         >> $MYSQL_CONFIG_FILE
     echo "log_bin                                                = $MYSQL_BASE_DIR/var/log/mysql/mysql_bin"                     >> $MYSQL_CONFIG_FILE
     echo "log_error                                              = $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log"               >> $MYSQL_CONFIG_FILE
-    echo "# log-slave-updates                                    = 1"                                                           >> $MYSQL_CONFIG_FILE              
     echo "long_query_time                                        = 1"                                                           >> $MYSQL_CONFIG_FILE
-    echo "# master_info_repository                               = TABLE"                                                       >> $MYSQL_CONFIG_FILE
     echo "max_allowed_packet                                     = 512M"                                                        >> $MYSQL_CONFIG_FILE
     echo "max_binlog_size                                        = 1G"                                                          >> $MYSQL_CONFIG_FILE
     echo "max_connect_errors                                     = 5120"                                                        >> $MYSQL_CONFIG_FILE
@@ -109,25 +107,13 @@ init(){
     echo "mysqlx_port                                            = $MYSQLX_BIND_PORT"                                           >> $MYSQL_CONFIG_FILE
     echo "# read_only                                            = ON"                                                          >> $MYSQL_CONFIG_FILE
     echo "# read_rnd_buffer_size                                 = 2M"                                                          >> $MYSQL_CONFIG_FILE
-    echo "# relay_log_index                                      = $MYSQL_BASE_DIR/var/log/mysql/relay_log.index"               >> $MYSQL_CONFIG_FILE
-    echo "# relay_log_recovery                                   = 1"                                                           >> $MYSQL_CONFIG_FILE
-    echo "# relay_log                                            = $MYSQL_BASE_DIR/var/log/mysql/relay_log"                     >> $MYSQL_CONFIG_FILE
-    echo "# replicate-do-db                                      = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# replicate-do-table                                   = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# replicate-ignore-db                                  = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# replicate-ignore-table                               = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# replicate-wild-do-table                              = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# replicate-wild-ignore-table                          = "                                                            >> $MYSQL_CONFIG_FILE
-    echo "# report_host                                          = slave_host"                                                  >> $MYSQL_CONFIG_FILE
     echo "# slave-skip-errors                                    = 1062,1032,1236"                                              >> $MYSQL_CONFIG_FILE
-    echo "# relay_log_info_repository                            = TABLE"                                                       >> $MYSQL_CONFIG_FILE
     echo "server_id                                              = $(date "+%s")"                                               >> $MYSQL_CONFIG_FILE
     echo "skip_external_locking"                                                                                                >> $MYSQL_CONFIG_FILE
     echo "# skip-grant-tables"                                                                                                  >> $MYSQL_CONFIG_FILE
     echo "skip-host-cache"                                                                                                      >> $MYSQL_CONFIG_FILE
     echo "skip_name_resolve                                      = ON"                                                          >> $MYSQL_CONFIG_FILE
     echo "skip_show_database                                     = ON"                                                          >> $MYSQL_CONFIG_FILE
-    echo "# skip-slave-start"                                                                                                   >> $MYSQL_CONFIG_FILE
     echo "slow_query_log                                         = 1"                                                           >> $MYSQL_CONFIG_FILE
     echo "slow_query_log_file                                    = $MYSQL_BASE_DIR/var/log/mysql/mysql_slow.log"                >> $MYSQL_CONFIG_FILE
     echo "sort_buffer_size                                       = 8M"                                                          >> $MYSQL_CONFIG_FILE
@@ -145,6 +131,37 @@ init(){
     echo "tmp_table_size                                         = 128M"                                                        >> $MYSQL_CONFIG_FILE
     echo "transaction_isolation                                  = REPEATABLE-READ"                                             >> $MYSQL_CONFIG_FILE
     echo "user                                                   = mysql"                                                       >> $MYSQL_CONFIG_FILE
+    echo "mysql replication"                                                                                                    >> $MYSQL_CONFIG_FILE
+    echo "# innodb_support_xa                                    = 1"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# read_only                                            = ON"                                                          >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_index                                      = $MYSQL_BASE_DIR/var/log/mysql/relay_log.index"               >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_recovery                                   = 1"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# relay_log                                            = $MYSQL_BASE_DIR/var/log/mysql/relay_log"                     >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_purge                                      = ON"                                                          >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_space_limit                                = 0"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# max_relay_log_size                                   = 1G"                                                          >> $MYSQL_CONFIG_FILE
+    echo "# replicate-do-db                                      = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-do-table                                   = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-ignore-db                                  = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-ignore-table                               = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-do-table                              = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-ignore-table                          = "                                                            >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-ignore-table                          = mysql.%"                                                     >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-ignore-table                          = information_schema.%"                                        >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-ignore-table                          = performance_schema.%"                                        >> $MYSQL_CONFIG_FILE
+    echo "# replicate-wild-ignore-table                          = sys.%"                                                       >> $MYSQL_CONFIG_FILE
+    echo "# report_host                                          = slave_host_ip"                                               >> $MYSQL_CONFIG_FILE
+    echo "# sync_binlog                                          = 1"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# log_slave_updates                                    = ON"                                                          >> $MYSQL_CONFIG_FILE
+    echo "# log-slave-updates                                    = 1"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# slave_skip_errors                                    = 1032,1062"                                                   >> $MYSQL_CONFIG_FILE
+    echo "# master_info_repository                               = TABLE"                                                       >> $MYSQL_CONFIG_FILE
+    echo "# relay_log_info_repository                            = TABLE"                                                       >> $MYSQL_CONFIG_FILE
+    echo "# skip-slave-start                                     = OFF"                                                         >> $MYSQL_CONFIG_FILE
+    echo "# slave_transaction_retries                            = 10"                                                          >> $MYSQL_CONFIG_FILE
+    echo "# slave_parallel_workers                               = 0"                                                           >> $MYSQL_CONFIG_FILE
+    echo "# slave_checkpoint_group                               = 512"                                                         >> $MYSQL_CONFIG_FILE
+    echo "# slave_net_timeout                                    = 60"                                                          >> $MYSQL_CONFIG_FILE
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log
     touch $MYSQL_BASE_DIR/var/log/mysql/mysql_slow.log
     chown mysql:mysql $MYSQL_BASE_DIR/var/log/mysql/mysql_error.log

@@ -16,27 +16,15 @@
 
 ## mysql
 
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos7.en.sh | bash -s init 5.7.26
-    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos7.en.sh | bash -s init 5.7.26 3306
-    
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.centos6.en.sh | bash -s init 5.7.26
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.centos6.en.sh | bash -s init 5.7.26 3306
     
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos7.en.sh | bash -s init 8.0.16
-    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos7.en.sh | bash -s init 8.0.16 3306
-    
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.centos6.en.sh | bash -s init 8.0.16
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.centos6.en.sh | bash -s init 8.0.16 3306
     
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql57.ubuntu.18.04.en.sh | bash -s init 5.7.26
-    
     curl -sSL https://0vj6.github.io/sh/mysql/mysql57.multi.ubuntu.18.04.en.sh | bash -s init 5.7.26 3306
-    
-    curl -sSL https://0vj6.github.io/sh/mysql/mysql80.ubuntu.18.04.en.sh | bash -s init 8.0.16
     
     curl -sSL https://0vj6.github.io/sh/mysql/mysql80.multi.ubuntu.18.04.en.sh | bash -s init 8.0.16 3306
 
@@ -110,22 +98,12 @@
 
 ## zabbix
     
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init agent 4.0
-    
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init agent 4.4
-    
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init server 4.0
     
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos7.sh | bash -s init server 4.4
     
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.0
-    
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.centos6.sh | bash -s init agent 4.4
     
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init agent 4.0
-    
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init agent 4.4
-    
-    curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init server 4.0
     
     curl -sSL https://0vj6.github.io/sh/zabbix/zabbix4.ubuntu.18.04.sh | bash -s init server 4.4

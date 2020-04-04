@@ -51,21 +51,29 @@
 # -A INPUT -m comment --comment "Added by administrator, for redis" -p tcp -m state --state NEW -m tcp -s 192.168.1.2 --dport 16384 -j ACCEPT
 
 init(){
-    # kill -9 "$(ps -o pid -u redis | grep -v "PID")"
     bind="$2"
     port="$3"
-    # rm -f /usr/bin/redis-server
-    # rm -f /usr/bin/redis-cli
-    # userdel -r redis
+    systemctl stop redis_$port
+    systemctl disable redis_$port
+    systemctl status redis_$port
+    rm -f /usr/bin/redis-server
+    rm -f /usr/bin/redis-sentinel
+    rm -f /usr/bin/redis-cli
+    rm -f /usr/lib/systemd/system/redis*
+    rm -f /usr/libexec/redis*
+    userdel -r redis
+    apt -y install libssl-dev make gcc wget curl vim lrzsz
     base_dir="/home/redis"
-    config_file="$base_dir/etc/redis/redis_$port.conf"
+    redis_config_file="$base_dir/etc/redis/redis_$port.conf"
+    redis_sentinel_config_file="$base_dir/etc/redis/redis_2$port-sentinel.conf"
     password="$(openssl rand -base64 20)"
-    pidfile="$base_dir/var/run/redis/redis_$port.pid"
-    logfile="$base_dir/var/log/redis/redis_$port.log"
+    redis_pidfile="$base_dir/var/run/redis/redis_$port.pid"
+    redis_sentinel_pidfile="$base_dir/var/run/redis/redis_2$port-sentinel.pid"
+    redis_logfile="$base_dir/var/log/redis/redis_$port.log"
+    redis_sentinel_logfile="$base_dir/var/log/redis/redis_2$port-sentinel.log"
     data_dir="$base_dir/var/lib/redis"
     dbfilename="dump_$port.rdb"
     appendfilename="appendonly_$port.aof"
-    apt -y install libssl-dev make gcc wget
     gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
     curl -sSL https://get.rvm.io | bash -s stable
     source /etc/profile.d/rvm.sh
@@ -80,94 +88,116 @@ init(){
     mkdir -p $base_dir/var/run/redis
     mkdir -p $base_dir/var/lib/redis
     mkdir -p $base_dir/etc/redis
+    mkdir -p $base_dir/tmp
     chown -R redis:redis $base_dir/var/log/redis
     chown -R redis:redis $base_dir/var/run/redis
     chown -R redis:redis $base_dir/var/lib/redis
     chown -R redis:redis $base_dir/etc/redis
+    chown -R redis:redis $base_dir/tmp
     chmod -R 700 $base_dir/var/log/redis
     chmod -R 700 $base_dir/var/run/redis
     chmod -R 700 $base_dir/var/lib/redis
     chmod -R 700 $base_dir/etc/redis
+    chmod -R 700 $base_dir/tmp
     tar -xf redis-$1.tar.gz -C $base_dir/usr/local
     rm -f redis-$1.tar.gz
     cd $base_dir/usr/local/redis-$1
     make -j2
-    cp src/redis-server /usr/bin
-    cp src/redis-cli /usr/bin
-    echo "bind                                 $bind"                                                                                                 > $config_file
-    echo "protected-mode                       yes"                                                                                                   >> $config_file
-    echo "port                                 $port"                                                                                                 >> $config_file
-    echo "tcp-backlog                          511"                                                                                                   >> $config_file
-    echo "timeout                              0"                                                                                                     >> $config_file
-    echo "tcp-keepalive                        300"                                                                                                   >> $config_file
-    echo "daemonize                            yes"                                                                                                   >> $config_file
-    echo "supervised                           no"                                                                                                    >> $config_file
-    echo "pidfile                              \"$pidfile\""                                                                                          >> $config_file
-    echo "loglevel                             notice"                                                                                                >> $config_file
-    echo "logfile                              \"$logfile\""                                                                                          >> $config_file
-    echo "databases                            16"                                                                                                    >> $config_file
-    echo "always-show-logo                     yes"                                                                                                   >> $config_file
-    echo "stop-writes-on-bgsave-error          yes"                                                                                                   >> $config_file
-    echo "rdbcompression                       yes"                                                                                                   >> $config_file
-    echo "rdbchecksum                          yes"                                                                                                   >> $config_file
-    echo "save                                 900 1"                                                                                                 >> $config_file
-    echo "save                                 300 10"                                                                                                >> $config_file
-    echo "save                                 60 10000"                                                                                              >> $config_file
-    echo "dbfilename                           \"$dbfilename\""                                                                                       >> $config_file
-    echo "dir                                  \"$data_dir\""                                                                                         >> $config_file
-    echo "slave-serve-stale-data               yes"                                                                                                   >> $config_file
-    echo "slave-read-only                      yes"                                                                                                   >> $config_file
-    echo "repl-diskless-sync                   no"                                                                                                    >> $config_file
-    echo "repl-diskless-sync-delay             5"                                                                                                     >> $config_file
-    echo "repl-disable-tcp-nodelay             no"                                                                                                    >> $config_file
-    echo "slave-priority                       100"                                                                                                   >> $config_file
-    echo "lazyfree-lazy-eviction               no"                                                                                                    >> $config_file
-    echo "lazyfree-lazy-expire                 no"                                                                                                    >> $config_file
-    echo "lazyfree-lazy-server-del             no"                                                                                                    >> $config_file
-    echo "slave-lazy-flush                     no"                                                                                                    >> $config_file
-    echo "appendonly                           yes"                                                                                                   >> $config_file
-    echo "appendfilename                       \"$appendfilename\""                                                                                   >> $config_file
-    echo "appendfsync                          everysec"                                                                                              >> $config_file
-    echo "no-appendfsync-on-rewrite            no"                                                                                                    >> $config_file
-    echo "auto-aof-rewrite-percentage          100"                                                                                                   >> $config_file
-    echo "auto-aof-rewrite-min-size            64mb"                                                                                                  >> $config_file
-    echo "aof-load-truncated                   yes"                                                                                                   >> $config_file
-    echo "aof-use-rdb-preamble                 no"                                                                                                    >> $config_file
-    echo "lua-time-limit                       5000"                                                                                                  >> $config_file
-    echo "# cluster-enabled                    yes"                                                                                                   >> $config_file
-    echo "# cluster-config-file                \"$base_dir/usr/local/redis-$1/redis-cluster/nodes-$port/redis_$port.conf\""                           >> $config_file
-    echo "# cluster-node-timeout               11000"                                                                                                 >> $config_file
-    echo "# cluster-require-full-coverage      no"                                                                                                    >> $config_file
-    echo "slowlog-log-slower-than              1000"                                                                                                  >> $config_file
-    echo "slowlog-max-len                      2000"                                                                                                  >> $config_file
-    echo "latency-monitor-threshold            0"                                                                                                     >> $config_file
-    echo "notify-keyspace-events               \"\""                                                                                                  >> $config_file
-    echo "hash-max-ziplist-entries             512"                                                                                                   >> $config_file
-    echo "hash-max-ziplist-value               64"                                                                                                    >> $config_file
-    echo "list-max-ziplist-size                -2"                                                                                                    >> $config_file
-    echo "list-compress-depth                  0"                                                                                                     >> $config_file
-    echo "set-max-intset-entries               512"                                                                                                   >> $config_file
-    echo "zset-max-ziplist-entries             128"                                                                                                   >> $config_file
-    echo "zset-max-ziplist-value               64"                                                                                                    >> $config_file
-    echo "hll-sparse-max-bytes                 3000"                                                                                                  >> $config_file
-    echo "activerehashing                      yes"                                                                                                   >> $config_file
-    echo "client-output-buffer-limit           normal 0 0 0"                                                                                          >> $config_file
-    echo "client-output-buffer-limit           slave 256mb 64mb 60"                                                                                   >> $config_file
-    echo "client-output-buffer-limit           pubsub 32mb 8mb 60"                                                                                    >> $config_file
-    echo "hz                                   10"                                                                                                    >> $config_file
-    echo "aof-rewrite-incremental-fsync        yes"                                                                                                   >> $config_file
-    echo "# Generated by CONFIG REWRITE"                                                                                                              >> $config_file
-    echo "masterauth                           \"$password\""                                                                                         >> $config_file
-    echo "requirepass                          \"$password\""                                                                                         >> $config_file
+    cp src/redis-server                  /usr/bin/
+    cp src/redis-cli                     /usr/bin/
+    cp src/redis-sentinel                /usr/bin/
+    echo "bind                                 $bind"                                                                                                 > $redis_config_file
+    echo "protected-mode                       yes"                                                                                                   >> $redis_config_file
+    echo "port                                 $port"                                                                                                 >> $redis_config_file
+    echo "tcp-backlog                          511"                                                                                                   >> $redis_config_file
+    echo "timeout                              0"                                                                                                     >> $redis_config_file
+    echo "tcp-keepalive                        300"                                                                                                   >> $redis_config_file
+    echo "daemonize                            yes"                                                                                                   >> $redis_config_file
+    echo "supervised                           no"                                                                                                    >> $redis_config_file
+    echo "pidfile                              \"$redis_pidfile\""                                                                                    >> $redis_config_file
+    echo "loglevel                             notice"                                                                                                >> $redis_config_file
+    echo "logfile                              \"$redis_logfile\""                                                                                    >> $redis_config_file
+    echo "databases                            16"                                                                                                    >> $redis_config_file
+    echo "always-show-logo                     yes"                                                                                                   >> $redis_config_file
+    echo "stop-writes-on-bgsave-error          yes"                                                                                                   >> $redis_config_file
+    echo "rdbcompression                       yes"                                                                                                   >> $redis_config_file
+    echo "rdbchecksum                          yes"                                                                                                   >> $redis_config_file
+    echo "save                                 900 1"                                                                                                 >> $redis_config_file
+    echo "save                                 300 10"                                                                                                >> $redis_config_file
+    echo "save                                 60 10000"                                                                                              >> $redis_config_file
+    echo "dbfilename                           \"$dbfilename\""                                                                                       >> $redis_config_file
+    echo "dir                                  \"$data_dir\""                                                                                         >> $redis_config_file
+    echo "slave-serve-stale-data               yes"                                                                                                   >> $redis_config_file
+    echo "slave-read-only                      yes"                                                                                                   >> $redis_config_file
+    echo "repl-diskless-sync                   no"                                                                                                    >> $redis_config_file
+    echo "repl-diskless-sync-delay             5"                                                                                                     >> $redis_config_file
+    echo "repl-disable-tcp-nodelay             no"                                                                                                    >> $redis_config_file
+    echo "slave-priority                       100"                                                                                                   >> $redis_config_file
+    echo "lazyfree-lazy-eviction               no"                                                                                                    >> $redis_config_file
+    echo "lazyfree-lazy-expire                 no"                                                                                                    >> $redis_config_file
+    echo "lazyfree-lazy-server-del             no"                                                                                                    >> $redis_config_file
+    echo "slave-lazy-flush                     no"                                                                                                    >> $redis_config_file
+    echo "appendonly                           yes"                                                                                                   >> $redis_config_file
+    echo "appendfilename                       \"$appendfilename\""                                                                                   >> $redis_config_file
+    echo "appendfsync                          everysec"                                                                                              >> $redis_config_file
+    echo "no-appendfsync-on-rewrite            no"                                                                                                    >> $redis_config_file
+    echo "auto-aof-rewrite-percentage          100"                                                                                                   >> $redis_config_file
+    echo "auto-aof-rewrite-min-size            64mb"                                                                                                  >> $redis_config_file
+    echo "aof-load-truncated                   yes"                                                                                                   >> $redis_config_file
+    echo "aof-use-rdb-preamble                 no"                                                                                                    >> $redis_config_file
+    echo "lua-time-limit                       5000"                                                                                                  >> $redis_config_file
+    echo "# cluster-enabled                    yes"                                                                                                   >> $redis_config_file
+    echo "# cluster-config-file                \"$base_dir/usr/local/redis-$1/redis-cluster/nodes-$port/redis_$port.conf\""                           >> $redis_config_file
+    echo "# cluster-node-timeout               11000"                                                                                                 >> $redis_config_file
+    echo "# cluster-require-full-coverage      no"                                                                                                    >> $redis_config_file
+    echo "slowlog-log-slower-than              1000"                                                                                                  >> $redis_config_file
+    echo "slowlog-max-len                      2000"                                                                                                  >> $redis_config_file
+    echo "latency-monitor-threshold            0"                                                                                                     >> $redis_config_file
+    echo "notify-keyspace-events               \"\""                                                                                                  >> $redis_config_file
+    echo "hash-max-ziplist-entries             512"                                                                                                   >> $redis_config_file
+    echo "hash-max-ziplist-value               64"                                                                                                    >> $redis_config_file
+    echo "list-max-ziplist-size                -2"                                                                                                    >> $redis_config_file
+    echo "list-compress-depth                  0"                                                                                                     >> $redis_config_file
+    echo "set-max-intset-entries               512"                                                                                                   >> $redis_config_file
+    echo "zset-max-ziplist-entries             128"                                                                                                   >> $redis_config_file
+    echo "zset-max-ziplist-value               64"                                                                                                    >> $redis_config_file
+    echo "hll-sparse-max-bytes                 3000"                                                                                                  >> $redis_config_file
+    echo "activerehashing                      yes"                                                                                                   >> $redis_config_file
+    echo "client-output-buffer-limit           normal 0 0 0"                                                                                          >> $redis_config_file
+    echo "client-output-buffer-limit           slave 256mb 64mb 60"                                                                                   >> $redis_config_file
+    echo "client-output-buffer-limit           pubsub 32mb 8mb 60"                                                                                    >> $redis_config_file
+    echo "hz                                   10"                                                                                                    >> $redis_config_file
+    echo "aof-rewrite-incremental-fsync        yes"                                                                                                   >> $redis_config_file
+    echo "# Generated by CONFIG REWRITE"                                                                                                              >> $redis_config_file
+    echo "# redis replication"                                                                                                                        >> $redis_config_file
+    echo "# masterauth                         $password"                                                                                             >> $redis_config_file
+    echo "# replicaof                          redis_master_ip redis_master_port"                                                                     >> $redis_config_file
+    echo "requirepass                          $password"                                                                                             >> $redis_config_file
+    echo "port                                 2$port"                                                                                                > $redis_sentinel_config_file
+    echo "daemonize                            yes"                                                                                                   >> $redis_sentinel_config_file
+    echo "pidfile                              $redis_sentinel_pidfile"                                                                               >> $redis_sentinel_config_file
+    echo "logfile                              \"$redis_sentinel_logfile\""                                                                           >> $redis_sentinel_config_file
+    echo "dir                                  $base_dir/tmp"                                                                                         >> $redis_sentinel_config_file
+    echo "sentinel monitor mymaster $bind $port 2"                                                                                                    >> $redis_sentinel_config_file
+    echo "sentinel down-after-milliseconds mymaster 30000"                                                                                            >> $redis_sentinel_config_file
+    echo "sentinel parallel-syncs mymaster 1"                                                                                                         >> $redis_sentinel_config_file
+    echo "sentinel failover-timeout mymaster 180000"                                                                                                  >> $redis_sentinel_config_file
+    echo "sentinel deny-scripts-reconfig yes"                                                                                                         >> $redis_sentinel_config_file
+    echo "sentinel auth-pass mymaster $password"                                                                                                      >> $redis_sentinel_config_file
+    echo "protected-mode no"                                                                                                                          >> $redis_sentinel_config_file
     wget -O "/usr/lib/systemd/system/redis_$port.service" https://0vj6.github.io/sh/redis/redis.service
-    wget -O "/usr/libexec/redis_$port-shutdow" https://0vj6.github.io/sh/redis/redis-shutdown
-    sed -i "s/\/etc\/redis.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/" /usr/lib/systemd/system/redis_$port.service
-    sed -i "s/\/etc\/\$SERVICE_NAME.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/libexec/redis_$port-shutdow
-    sed -i "s/SERVICE_NAME=redis/SERVICE_NAME=redis_$port/g" /usr/libexec/redis_$port-shutdow
+    wget -O "/usr/lib/systemd/system/redis_2$ports-sentinel.service" https://0vj6.github.io/sh/redis/redis-sentinel.service
+    wget -O "/usr/libexec/redis_$port-shutdown" https://0vj6.github.io/sh/redis/redis-shutdown
+    sed -i "s/\/etc\/redis.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/lib/systemd/system/redis_$port.service
+    sed -i "s/redis-shutdown/redis_$port-shutdown/g" /usr/lib/systemd/system/redis_$port.service
+    sed -i "s/\/etc\/redis-sentinel.conf/\/home\/redis\/etc\/redis\/sentinel_2$port.conf/g" /usr/lib/systemd/system/redis_2$ports-sentinel.service
+    sed -i "s/redis-shutdown/redis_$port-shutdown/g" /usr/lib/systemd/system/redis_2$ports-sentinel.service
+    sed -i "s/\/etc\/\$SERVICE_NAME.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/libexec/redis_$port-shutdown
+    sed -i "s/SERVICE_NAME=redis/SERVICE_NAME=redis_$port/g" /usr/libexec/redis_$port-shutdown
     systemctl enable redis_$port
     systemctl start redis_$port
     systemctl status redis_$port
-    # sudo -uredis $base_dir/usr/local/redis-$1/src/redis-server $config_file
+    # sudo -uredis $base_dir/usr/local/redis-$1/src/redis-server $redis_config_file
     ps -o user,stime,etime,pid,ppid,command -u redis
 }
 

@@ -186,12 +186,12 @@ init(){
     echo "sentinel auth-pass mymaster $password"                                                                                                      >> $redis_sentinel_config_file
     echo "protected-mode no"                                                                                                                          >> $redis_sentinel_config_file
     wget -O "/usr/lib/systemd/system/redis_$port.service" https://0vj6.github.io/sh/redis/redis.service
-    wget -O "/usr/lib/systemd/system/redis_2$ports-sentinel.service" https://0vj6.github.io/sh/redis/redis-sentinel.service
+    wget -O "/usr/lib/systemd/system/redis_2$port-sentinel.service" https://0vj6.github.io/sh/redis/redis-sentinel.service
     wget -O "/usr/libexec/redis_$port-shutdown" https://0vj6.github.io/sh/redis/redis-shutdown
     sed -i "s/\/etc\/redis.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/lib/systemd/system/redis_$port.service
     sed -i "s/redis-shutdown/redis_$port-shutdown/g" /usr/lib/systemd/system/redis_$port.service
-    sed -i "s/\/etc\/redis-sentinel.conf/\/home\/redis\/etc\/redis\/sentinel_2$port.conf/g" /usr/lib/systemd/system/redis_2$ports-sentinel.service
-    sed -i "s/redis-shutdown/redis_$port-shutdown/g" /usr/lib/systemd/system/redis_2$ports-sentinel.service
+    sed -i "s/\/etc\/redis-sentinel.conf/\/home\/redis\/etc\/redis\/redis_2$port-sentinel.conf/g" /usr/lib/systemd/system/redis_2$port-sentinel.service
+    sed -i "s/redis-shutdown/redis_$port-shutdown/g" /usr/lib/systemd/system/redis_2$port-sentinel.service
     sed -i "s/\/etc\/\$SERVICE_NAME.conf/\/home\/redis\/etc\/redis\/redis_$port.conf/g" /usr/libexec/redis_$port-shutdown
     sed -i "s/SERVICE_NAME=redis/SERVICE_NAME=redis_$port/g" /usr/libexec/redis_$port-shutdown
     systemctl enable redis_$port

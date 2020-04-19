@@ -31,7 +31,14 @@ init() {
             yum -y install https://repo.zabbix.com/zabbix/4.4/rhel/7/x86_64/zabbix-release-4.4-1.el7.noarch.rpm
             yum clean all
         fi
-        yum -y install zabbix-agent bc net-tools wget curl chkconfig
+        yum -y install zabbix-agent 
+        yum -y install bc 
+        yum -y install net-tools 
+        yum -y install wget 
+        yum -y install curl 
+        yum -y install chkconfig
+        yum -y install mtr
+        yum -y install mlocate
         cp /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bak
         sed -i "s/# ListenPort=10050/ListenPort=10050/" /etc/zabbix/zabbix_agentd.conf
         sed -i "s/Hostname=Zabbix server/Hostname=$(hostname)/" /etc/zabbix/zabbix_agentd.conf

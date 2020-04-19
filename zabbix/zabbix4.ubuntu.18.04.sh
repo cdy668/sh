@@ -24,7 +24,12 @@ init() {
         rm -fr /etc/rc.d/rc5.d/S90zabbix*
         rm -f /var/lib/alternatives/zabbix-web-font
         setenforce 0
-        apt -y install bc net-tools wget curl
+        apt -y install bc
+        apt -y install net-tools
+        apt -y install wget
+        apt -y install curl
+        apt -y install mtr
+        apt -y install mlocate
         if [[ "$2" = "4.0" ]]; then
             wget https://repo.zabbix.com/zabbix/4.0/ubuntu/pool/main/z/zabbix-release/zabbix-release_4.0-3+bionic_all.deb
             dpkg -i zabbix-release_4.0-3+bionic_all.deb

@@ -1,0 +1,12 @@
+/var/log/yum.log
+{
+    rotate 180
+    daily
+    dateext
+    dateformat .%Y%m%d
+    missingok
+    notifempty
+    delaycompress
+    compress
+    create 0600 root root
+}

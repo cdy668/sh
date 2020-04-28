@@ -6,8 +6,9 @@
 #     https://cloud.google.com/solutions/chrome-desktop-remote-on-compute-engine
 #     https://remotedesktop.google.com/headless
 
-desktop(){
+init_desktop(){
     sudo yum -y update
+    sudo yum -y install epel-release
     sudo yum -y install gcc \
                         gcc-c++ \
                         vim \
@@ -28,18 +29,20 @@ desktop(){
                         traceroute \
                         mtr \
                         telnet \
-                        vino \
                         python2-pip \
                         python3-pip \
                         python*virtualenv \
                         redhat-lsb \
                         yum-utils \
                         ansible \
-                        epel-release \
                         cockpit \
                         cockpit-ws \
                         cockpit-dashboard \
-                        cockpit-storaged
+                        cockpit-storaged \
+                        chkconfig \
+                        tcping \
+                        ipset \
+                        ethtool
     sudo wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
     sudo yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     sudo yum -y install https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
@@ -47,7 +50,7 @@ desktop(){
     sudo yum -y groupinstall "GNOME Desktop"
     sudo ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
     sudo yum -y install gnome-tweak-tool \
-                        firewall-config \
+                        firewalld-config \
                         filezilla \
                         gimp \
                         qbittorrent \
@@ -56,6 +59,7 @@ desktop(){
                         libreoffice \
                         remmina \
                         firefox \
+                        vino \
                         fcitx \
                         fcitx-pinyin \
                         fcitx-data \
@@ -74,11 +78,118 @@ desktop(){
     sudo yum -y install vlc vlc-core python-vlc npapi-vlc exfat-utils fuse-exfat
     curl https://packages.microsoft.com/config/rhel/7/prod.repo | sudo tee /etc/yum.repos.d/microsoft.repo
     sudo yum -y install powershell
-    sudo reboot
+}
+
+init_server(){
+    sudo yum -y update
+    sudo yum -y install epel-release
+    sudo yum -y install gcc \
+                        gcc-c++ \
+                        vim \
+                        git \
+                        mlocate \
+                        iftop \
+                        sysstat \
+                        net-tools \
+                        dos2unix \
+                        tree \
+                        wget \
+                        curl \
+                        lrzsz \
+                        openssh-server \
+                        zip \
+                        unzip \
+                        make \
+                        traceroute \
+                        mtr \
+                        telnet \
+                        python2-pip \
+                        python3-pip \
+                        python*virtualenv \
+                        redhat-lsb \
+                        yum-utils \
+                        ansible \
+                        cockpit \
+                        cockpit-ws \
+                        cockpit-dashboard \
+                        cockpit-storaged \
+                        chkconfig \
+                        tcping \
+                        ipset \
+                        ethtool
+}
+
+init_iptables(){
+    sudo yum -y update iptables-services
+}
+
+init_firewalld(){
+    sudo yum -y update firewalld
+}
+
+init_sshd(){
+    sudo yum -y update openssh-server
+}
+
+init_ulimit(){
+    echo "not ready"
+}
+
+init_sudoers(){
+    echo "not ready"
+}
+
+init_ldconfig(){
+    echo "not ready"
+}
+
+init_logrotate(){
+    echo "not ready"
+}
+
+init_vim(){
+    echo "not ready"
+}
+
+init_rsyslog(){
+    echo "not ready"
 }
 
 case $1 in
     desktop)
-        desktop
+        init_desktop
+    ;;
+    server)
+        init_server
+    ;;
+    iptables)
+        init_iptables
+    ;;
+    firewalld)
+        init_firewalld
+    ;;
+    sshd)
+        init_sshd
+    ;;
+    ulimit)
+        init_ulimit
+    ;;
+    sudoers)
+        init_sudoers
+    ;;
+    ldconfig)
+        init_ldconfig
+    ;;
+    selinux)
+        init_selinux
+    ;;
+    logrotate)
+        init_logrotate
+    ;;
+    vim)
+        init_vim
+    ;;
+    rsyslog)
+        init_rsyslog
     ;;
 esac

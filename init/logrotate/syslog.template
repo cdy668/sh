@@ -3,16 +3,8 @@
 /var/log/messages
 /var/log/secure
 /var/log/spooler
-/var/log/sshd.log
 {
-    rotate 180
-    daily
-    dateext
-    dateformat .%Y%m%d
     missingok
-    notifempty
-    delaycompress
-    compress
     sharedscripts
     postrotate
 	/bin/kill -HUP `cat /var/run/syslogd.pid 2> /dev/null` 2> /dev/null || true

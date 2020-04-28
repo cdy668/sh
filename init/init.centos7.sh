@@ -42,11 +42,13 @@ init_desktop(){
                    chkconfig \
                    tcping \
                    ipset \
-                   ethtool
+                   ethtool \
+                   google-authenticator \
+                   extundelete \
+                   httping
     sudo wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
     yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     yum -y install https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
-    yum -y install extundelete google-authenticator httping ansible
     yum -y groupinstall "GNOME Desktop"
     sudo ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
     yum -y install gnome-tweak-tool \
@@ -117,7 +119,9 @@ init_server(){
                    tcping \
                    ipset \
                    ethtool \
-                   google-authenticator
+                   google-authenticator \
+                   extundelete \
+                   httping
 }
 
 init_iptables(){
@@ -161,7 +165,7 @@ init_logrotate(){
 init_vim(){
     yum -y install vim wget
     mv ~/.vimrc ~/.vimrc.$(date +"%Y%m%d%H%M%S")
-    wget -O ~/.vimrc https://0vj6.github.io/sh/init/vim/.vimrc
+    wget -O ~/.vimrc https://0vj6.github.io/sh/init/vim/vimrc
     chmod 600 ~/.vimrc
 }
 

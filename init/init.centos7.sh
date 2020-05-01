@@ -254,7 +254,7 @@ init_rsyslog(){
 
 init_profile(){
     yum -y install wget
-    wget -O /etc/profile.d/screen_record.sh https://0vj6.github.io/sh/init/profile/script.sh
+    wget -O /etc/profile.d/screen_record.sh https://0vj6.github.io/sh/init/profile/screen_record.sh
     chmod 644 /etc/profile.d/screen_record.sh
     echo "* * * * * chattr +a /tmp/.timing" >> /var/spool/cron/root
     echo "* * * * * chattr +a /tmp/.record" >> /var/spool/cron/root

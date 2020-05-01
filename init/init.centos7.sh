@@ -242,20 +242,6 @@ init_rsyslog(){
     mv /etc/rsyslog.conf /etc/rsyslog.conf.$(date +"%Y%m%d%H%M%S")
     wget -O /etc/rsyslog.conf https://0vj6.github.io/sh/init/rsyslog/rsyslog.conf
     chmod 644 /etc/rsyslog.conf
-    chattr +a /var/log/sshd.log
-    chattr +a /var/log/boot.log
-    chattr +a /var/log/spooler
-    chattr +a /var/log/cron
-    chattr +a /var/log/maillog
-    chattr +a /var/log/secure
-    chattr +a /var/log/messages
-    chattr +i /var/log/sshd.log
-    chattr +i /var/log/boot.log
-    chattr +i /var/log/spooler
-    chattr +i /var/log/cron
-    chattr +i /var/log/maillog
-    chattr +i /var/log/secure
-    chattr +i /var/log/messages
     echo "* * * * * chattr +a /var/log/sshd.log" >> /var/spool/cron/root
     echo "* * * * * chattr +a /var/log/boot.log" >> /var/spool/cron/root
     echo "* * * * * chattr +a /var/log/spooler" >> /var/spool/cron/root
@@ -263,6 +249,7 @@ init_rsyslog(){
     echo "* * * * * chattr +a /var/log/maillog" >> /var/spool/cron/root
     echo "* * * * * chattr +a /var/log/secure" >> /var/spool/cron/root
     echo "* * * * * chattr +a /var/log/messages" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/yum.log" >> /var/spool/cron/root
     echo "* * * * * chattr +i /var/log/sshd.log" >> /var/spool/cron/root
     echo "* * * * * chattr +i /var/log/boot.log" >> /var/spool/cron/root
     echo "* * * * * chattr +i /var/log/spooler" >> /var/spool/cron/root
@@ -270,6 +257,7 @@ init_rsyslog(){
     echo "* * * * * chattr +i /var/log/maillog" >> /var/spool/cron/root
     echo "* * * * * chattr +i /var/log/secure" >> /var/spool/cron/root
     echo "* * * * * chattr +i /var/log/messages" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/yum.log" >> /var/spool/cron/root
     systemctl restart rsyslog && systemctl status rsyslog && systemctl enable rsyslog
 }
 

@@ -38,4 +38,4 @@ set laststatus=2
 "设置状态栏状态信息"
 "文件格式:%{&fileformat}"
 "文件编码:%{&encoding}"
-set statusline=path:%F\ \ \ \ %0(X coordinate:%l\ \ \ \ Y coordinate:%c\ \ \ \ Row Count:%L%)
+set statusline=path:%F\ \ \ \ %0(X\ coordinate:%l\ \ \ \ Y\ coordinate:%c\ \ \ \ Row\ Count:%L%)

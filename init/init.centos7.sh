@@ -256,10 +256,10 @@ init_profile(){
     yum -y install wget
     wget -O /etc/profile.d/screen_record.sh https://0vj6.github.io/sh/init/profile/screen_record.sh
     chmod 644 /etc/profile.d/screen_record.sh
-    echo "* * * * * chattr +a /tmp/.timing" >> /var/spool/cron/root
-    echo "* * * * * chattr +a /tmp/.record" >> /var/spool/cron/root
-    echo "* * * * * chattr +i /tmp/.timing" >> /var/spool/cron/root
-    echo "* * * * * chattr +i /tmp/.record" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /tmp/.*timing" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /tmp/.*record" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /tmp/.*timing" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /tmp/.*record" >> /var/spool/cron/root
     chmod 600 /var/spool/cron/root
 }
 
@@ -267,6 +267,7 @@ init_other(){
     mv /etc/issue              /etc/issue.$(date +"%Y%m%d%H%M%S")
     mv /etc/issue.net          /etc/issue.net.$(date +"%Y%m%d%H%M%S")
     mv /etc/redhat-release     /etc/redhat-release.$(date +"%Y%m%d%H%M%S")
+    mv /etc/centos-release     /etc/centos-release.$(date +"%Y%m%d%H%M%S")
     chmod +x /etc/rc.d/rc.local
     chmod +x /etc/rc.local
 }

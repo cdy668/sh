@@ -249,6 +249,27 @@ init_rsyslog(){
     chattr +a /var/log/maillog
     chattr +a /var/log/secure
     chattr +a /var/log/messages
+    chattr +i /var/log/sshd.log
+    chattr +i /var/log/boot.log
+    chattr +i /var/log/spooler
+    chattr +i /var/log/cron
+    chattr +i /var/log/maillog
+    chattr +i /var/log/secure
+    chattr +i /var/log/messages
+    echo "* * * * * chattr +a /var/log/sshd.log" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/boot.log" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/spooler" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/cron" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/maillog" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/secure" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /var/log/messages" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/sshd.log" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/boot.log" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/spooler" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/cron" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/maillog" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/secure" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /var/log/messages" >> /var/spool/cron/root
     systemctl restart rsyslog && systemctl status rsyslog && systemctl enable rsyslog
 }
 

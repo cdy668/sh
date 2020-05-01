@@ -41,11 +41,11 @@ init_desktop(){
                    cockpit-storaged \
                    chkconfig \
                    tcping \
-                   ipset \
                    ethtool \
                    google-authenticator \
                    extundelete \
-                   httping
+                   httping \
+                   nmap
     sudo wget https://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
     yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
     yum -y install https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm
@@ -117,19 +117,64 @@ init_server(){
                    cockpit-storaged \
                    chkconfig \
                    tcping \
-                   ipset \
                    ethtool \
                    google-authenticator \
                    extundelete \
-                   httping
+                   httping \
+                   nmap
 }
 
 init_iptables(){
-    yum -y install iptables-services wget
+    yum -y install iptables-services wget ipset
+    systemctl stop firewalld
+    systemctl disable firewalld
+    systemctl status firewalld
+    mv /etc/sysconfig/iptables /etc/sysconfig/iptables.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/sysconfig/iptables https://0vj6.github.io/sh/init/iptables/iptables
+    chmod 600 /etc/sysconfig/iptables
+    wget -O /etc/sysconfig/cloudflare_ips-v4 https://www.cloudflare.com/ips-v4
+    chmod 600 /etc/sysconfig/cloudflare_ips-v4
+    ipset create cloudflare_ips-v4 hash:net maxelem 1000000
+    ipset list
+    systemctl restart iptables && systemctl status iptables && systemctl enable iptables
+    # Example
+    # 增加白名单IP
+    # ipset add cloudflare_ips-v4 131.0.72.0/22
+    #
+    # 删除白名单IP
+    # ipset del cloudflare_ips-v4 131.0.72.0/22
+    # 
+    # 通过vim编辑/etc/sysconfig/iptables增加白名单规则
+    # -A INPUT -p tcp -m state --state NEW -m tcp -m set --match-set cloudflare_ips-v4 src --dport 80 -m comment --comment "say something" -j ACCEPT
+    # service iptables restart
+    #
+    # 通过iptable命令增加白名单规则
+    # iptables -I INPUT -p tcp -m state --state NEW -m tcp -m set --match-set cloudflare_ips-v4 src --dport 80 -m comment --comment "say something" -j ACCEPT
+    # service iptables save
+    # service iptables restart
+    #
+    # 将ipset规则保存到文件
+    # ipset save cloudflare_ips-v4 -f ~/cloudflare_ips-v4
+    # service iptables restart
+    #
+    # 删除ipset规则
+    # ipset destroy cloudflare_ips-v4
+    # service iptables restart
+    #
+    # 导入ipset规则
+    # ipset restore -f ~/cloudflare_ips-v4
+    # service iptables restart
 }
 
 init_firewalld(){
     yum -y install firewalld wget
+    systemctl stop iptables
+    systemctl disable iptables
+    systemctl status iptables
+    mv /etc/firewalld/zones/public.xml /etc/firewalld/zones/public.xml.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/firewalld/zones/public.xml https://0vj6.github.io/sh/init/firewalld/public.xml
+    chmod 644 /etc/firewalld/zones/public.xml
+    systemctl restart firewalld && systemctl status firewalld && systemctl enable firewalld
 }
 
 init_sshd(){
@@ -137,19 +182,42 @@ init_sshd(){
     mv /etc/ssh/sshd_config /etc/ssh/sshd_config.$(date +"%Y%m%d%H%M%S")
     wget -O /etc/ssh/sshd_config https://0vj6.github.io/sh/init/sshd/sshd_config
     chmod 600 /etc/ssh/sshd_config
-    systemctl restart sshd && systemctl status sshd
+    systemctl restart sshd && systemctl status sshd && systemctl enable sshd
 }
 
 init_ulimit(){
     yum -y install wget
+    mv /etc/security/limits.conf /etc/security/limits.conf.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/security/limits.conf https://0vj6.github.io/sh/init/ulimit/limits.conf
+    chmod 644 /etc/security/limits.conf
+    mv /etc/security/limits.d/20-nproc.conf /etc/security/limits.d/20-nproc.conf.$(date +"%Y%m%d%H%M%S")
+    mv /etc/sysctl.conf /etc/sysctl.conf.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/sysctl.conf https://0vj6.github.io/sh/init/ulimit/sysctl.conf
+    chmod 644 /etc/sysctl.conf
+    echo 819200 > /proc/sys/fs/inotify/max_user_watches
+    sysctl -p
 }
 
 init_sudoers(){
     yum -y install wget
+    mv /etc/sudoers /etc/sudoers.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/sudoers https://0vj6.github.io/sh/init/sudoers/sudoers
+    chmod 440 /etc/sudoers
 }
 
 init_ldconfig(){
     yum -y install wget
+    # echo "/usr/local/mysql/lib" > /etc/ld.so.conf.d/mysql.conf
+    # ldconfig
+}
+
+init_selinux(){
+    yum -y install wget
+    mv /etc/selinux/config /etc/selinux/config.$(date +"%Y%m%d%H%M%S")
+    wget -O /etc/selinux/config https://0vj6.github.io/sh/init/selinux/config
+    chmod 644 /etc/selinux/config
+    setenforce 0
+    getenforce
 }
 
 init_logrotate(){
@@ -174,7 +242,33 @@ init_rsyslog(){
     mv /etc/rsyslog.conf /etc/rsyslog.conf.$(date +"%Y%m%d%H%M%S")
     wget -O /etc/rsyslog.conf https://0vj6.github.io/sh/init/rsyslog/rsyslog.conf
     chmod 644 /etc/rsyslog.conf
-    systemctl restart rsyslog && systemctl status rsyslog
+    chattr +a /var/log/sshd.log
+    chattr +a /var/log/boot.log
+    chattr +a /var/log/spooler
+    chattr +a /var/log/cron
+    chattr +a /var/log/maillog
+    chattr +a /var/log/secure
+    chattr +a /var/log/messages
+    systemctl restart rsyslog && systemctl status rsyslog && systemctl enable rsyslog
+}
+
+init_profile(){
+    yum -y install wget
+    wget -O /etc/profile.d/screen_record.sh https://0vj6.github.io/sh/init/profile/script.sh
+    chmod 644 /etc/profile.d/screen_record.sh
+    echo "* * * * * chattr +a /tmp/.timing" >> /var/spool/cron/root
+    echo "* * * * * chattr +a /tmp/.record" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /tmp/.timing" >> /var/spool/cron/root
+    echo "* * * * * chattr +i /tmp/.record" >> /var/spool/cron/root
+    chmod 600 /var/spool/cron/root
+}
+
+init_other(){
+    mv /etc/issue              /etc/issue.$(date +"%Y%m%d%H%M%S")
+    mv /etc/issue.net          /etc/issue.net.$(date +"%Y%m%d%H%M%S")
+    mv /etc/redhat-release     /etc/redhat-release.$(date +"%Y%m%d%H%M%S")
+    chmod +x /etc/rc.d/rc.local
+    chmod +x /etc/rc.local
 }
 
 case $1 in
@@ -213,5 +307,11 @@ case $1 in
     ;;
     rsyslog)
         init_rsyslog
+    ;;
+    profile)
+        init_profile
+    ;;
+    other)
+        init_other
     ;;
 esac

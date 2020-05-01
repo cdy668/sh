@@ -1,0 +1,1 @@
+exec /usr/bin/script -q -f -t 2>/tmp/.$USER.$UID.$(date +%Y%m%d%H%M%S).timing -a /tmp/.$USER.$UID.$(date +%Y%m%d%H%M%S).record

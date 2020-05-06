@@ -88,7 +88,7 @@
 
 ## ubuntu
 
-    curl -sSL https://0vj6.github.io/sh/init/init.ubuntu.18.04.sh | bash -s desktop
+    curl -sSL https://0vj6.github.io/sh/init/init.ubuntu.20.04.sh | bash -s desktop
 
 ## vsftpd
     
